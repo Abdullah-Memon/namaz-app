@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import "./theme.css";
+
+
+body {
+  font-family: var(--font-family-regular);
+  background-color: var(--color-background);
+  color: var(--color-secondary);
+  margin: 0;
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  color: var(--color-primary);
+  margin: 0;
+  padding: 0;
+}
+
+.module{
+  padding: 2rem;
+}

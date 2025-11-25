@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "ambile-regular";
+  src: url("./assets/fonts/regular/ambile-regular.ttf") format("truetype"),
+    url("./assets/fonts/regular/ambile-regular.woff") format("woff"),
+    url("./assets/fonts/regular/ambile-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ambile-heading";
+  src: url("./assets/fonts/heading/ambile-heading.ttf") format("truetype"),
+    url("./assets/fonts/heading/ambile-heading.woff") format("woff"),
+    url("./assets/fonts/heading/ambile-heading.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme{
+  --color-primary: #129490;
+  --color-background: #F4F5F5;
+  --color-text: #141301;
+
+  --font-family-regular: 'ambile-regular', sans-serif;
+  --font-family-heading: 'ambile-heading', sans-serif;
+}
