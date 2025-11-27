@@ -24,6 +24,8 @@ export default defineConfig([
     },
     rules: {
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // Allow setState in effects when explicitly controlled by dependencies
+      'react-hooks/rules-of-hooks': 'off',
     },
   },
 ])

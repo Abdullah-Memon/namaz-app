@@ -12,10 +12,18 @@ const Dropdown = ({
   disabled = false,
   className = "",
 }) => {
+  
   // Find the initial selected option based on preSelectOption value
   const initialSelected = useMemo(() => {
-    if (!preSelectOption) return null;
-    return options.find(option => option === preSelectOption || option.value === preSelectOption);
+    if (!preSelectOption && preSelectOption !== 0) return null;
+    
+    // Convert preSelectOption to string for comparison
+    const preSelectStr = String(preSelectOption);
+    
+    return options.find(option => {
+      const optionValue = typeof option === "string" ? option : option.value;
+      return String(optionValue) === preSelectStr;
+    });
   }, [preSelectOption, options]);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -113,8 +121,8 @@ const Dropdown = ({
                 const isSelected =
                   selectedOption &&
                   (typeof option === "string"
-                    ? option === selectedOption
-                    : option.value === selectedOption.value);
+                    ? String(option) === String(selectedOption)
+                    : String(option.value) === String(selectedOption.value || selectedOption));
 
                 return (
                   <li key={index}>

@@ -38,4 +38,5 @@ export {
   getLayoutDirection,
   saveLayoutDirection,
   getCurrentLanguage,
+  defaultLanguage,
 };

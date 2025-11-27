@@ -62,6 +62,8 @@ const getCitysByCountryCode = (countryCode) => {
 }
 
 const getCityByCityCode = (cityCode) => {
+  if (!cityCode) return null;
+  
   for (const location of locations) {
     const city = location.cities.find(city => city.cityCode === cityCode);
     if (city) {

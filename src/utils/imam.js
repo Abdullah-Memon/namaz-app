@@ -1,4 +1,4 @@
-import {getCurrentLanguage} from './language';
+import { getCurrentLanguage } from "./language";
 const imamsList = {
   hanafi: {
     id: "hanafi",
@@ -76,15 +76,28 @@ const imamsList = {
   },
 };
 
-const defaultImam = "hanafi";
+const defaultImamForCountries = {
+  "PK": 0, // Pakistan - Hanafi (1)
+  "SA": 0, // Saudi Arabia - Shafi'i (0)
+  "AE": 0, // UAE - Shafi'i (0)
+  "EG": 0, // Egypt - Shafi'i (0)
+  "ID": 0, // Indonesia - Shafi'i (0)
+  "MY": 0, // Malaysia - Shafi'i (0)
+};
 
 const getImamList = () => {
-    const currentLanguage = getCurrentLanguage();
-    
-    return Object.values(imamsList).map(imam => ({
-        label: imam.names[currentLanguage],
-        value: imam.id
-    }));
-}
+  const currentLanguage = getCurrentLanguage();
 
-export { imamsList, getImamList, defaultImam };
+  // return Object.values(imamsList).map(imam => ({
+  //     label: imam.names[currentLanguage],
+  //     value: imam.id
+  // }));
+
+  // for now return only 2 hanafi and shafii
+  return [
+    { label: imamsList.shafii.names[currentLanguage], value: "0" },
+    { label: imamsList.hanafi.names[currentLanguage], value: "1" },
+  ];
+};
+
+export { imamsList, getImamList, defaultImamForCountries };

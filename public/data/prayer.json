@@ -1,0 +1,30 @@
+{
+  "code": 200,
+  "status": "OK",
+  "data": {
+    "timings": {
+      "Fajr": "05:30",
+      "Sunrise": "06:45",
+      "Dhuhr": "12:15",
+      "Asr": "15:30",
+      "Sunset": "17:45",
+      "Maghrib": "17:50",
+      "Isha": "19:15",
+      "Imsak": "05:20",
+      "Midnight": "00:00"
+    },
+    "date": {
+      "readable": "26 Nov 2025",
+      "timestamp": "1732598400"
+    },
+    "meta": {
+      "latitude": 24.8607,
+      "longitude": 67.0011,
+      "timezone": "Asia/Karachi",
+      "method": {
+        "id": 5,
+        "name": "Islamic Society of North America (ISNA)"
+      }
+    }
+  }
+}

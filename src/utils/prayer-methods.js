@@ -1,12 +1,20 @@
-const prayerMothods = 
+import { getCurrentLanguage } from "./language";
+
+const prayerMethods = 
 [
   {
     "id": "jafari",
-    "name": "Jafari (Shia Ithna-Ashari)",
-    "name_sd": "جعفري (شيعه اثنا عشري)",
+    "name": {
+      en: "Jafari (Shia Ithna-Ashari)",
+      ur: "جعفري (شیعہ اثنا عشری)",
+      sd: "جعفري (شيعه اثنا عشري)"
+    },
     "apiMethodId": 0,
-    "description": "Shia Ithna-Ashari method",
-    "description_sd": "شيعه اثنا عشري جو طريقو",
+    "description": {
+      en: "Jafari method as used in Iran, Iraq",
+      ur: "ایران، عراق میں استعمال ہونے والا جعفری طریقہ",
+      sd: "ايران، عراق ۾ استعمال ٿيندڙ جعفري طريقو"
+    },
     "fajrAngle": 16,
     "ishaAngle": 14,
     "school": "jafari",
@@ -14,11 +22,17 @@ const prayerMothods =
   },
   {
     "id": "karachi",
-    "name": "University of Islamic Sciences, Karachi",
-    "name_sd": "يونيورسٽي آف اسلامڪ سائنسز، ڪراچي",
+    "name": {
+      en: "University of Islamic Sciences, Karachi",
+      ur: "یونیورسٹی آف اسلامک سائنسز، کراچی",
+      sd: "يونيورسٽي آف اسلامڪ سائنسز، ڪراچي"
+    },
     "apiMethodId": 1,
-    "description": "University of Islamic Sciences, Karachi method",
-    "description_sd": "يونيورسٽي آف اسلامڪ سائنسز، ڪراچي جو طريقو",
+    "description": {
+      en: "University of Islamic Sciences, Karachi method",
+      ur: "يونيورسٽي آف اسلامڪ سائنسز، ڪراچي جو طريقو",
+      sd: "يونيورسٽي آف اسلامڪ سائنسز، ڪراچي جو طريقو"
+    },
     "fajrAngle": 18,
     "ishaAngle": 18,
     "school": "hanafi",
@@ -26,11 +40,17 @@ const prayerMothods =
   },
   {
     "id": "isna",
-    "name": "Islamic Society of North America (ISNA)",
-    "name_sd": "اسلامي سوسائٽي آف نارٿ آمريڪا (اسنا)",
+    "name": {
+      en: "Islamic Society of North America (ISNA)",
+      ur: "اسلامک سوسائٹی آف نارتھ امریکہ (آئسنا)",
+      sd: "اسلامي سوسائٽي آف نارٿ آمريڪا (اسنا)"
+    },
     "apiMethodId": 2,
-    "description": "Islamic Society of North America calculation method",
-    "description_sd": "اسلامي سوسائٽي آف نارٿ آمريڪا جو حسابي طريقو",
+    "description": {
+      en: "Islamic Society of North America calculation method",
+      ur: "اسلامي سوسائٽي آف نارتھ امریکہ کا حسابی طریقہ",
+      sd: "اسلامي سوسائٽي آف نارٿ آمريڪا جو حسابي طريقو"
+    },
     "fajrAngle": 15,
     "ishaAngle": 15,
     "school": "shafi",
@@ -38,11 +58,17 @@ const prayerMothods =
   },
   {
     "id": "mwl",
-    "name": "Muslim World League",
-    "name_sd": "مسلم ورلڊ ليگ",
+    "name": {
+      en: "Muslim World League",
+      ur: "مسلم ورلڈ لیگ",
+      sd: "مسلم ورلڊ ليگ"
+    },
     "apiMethodId": 3,
-    "description": "Muslim World League calculation method",
-    "description_sd": "مسلم ورلڊ ليگ جو حسابي طريقو",
+    "description": {
+      en: "Muslim World League calculation method",
+      ur: "مسلم ورلڈ لیگ جو حسابی طریقہ",
+      sd: "مسلم ورلڊ ليگ جو حسابي طريقو"
+    },
     "fajrAngle": 18,
     "ishaAngle": 17,
     "school": "shafi",
@@ -50,11 +76,17 @@ const prayerMothods =
   },
   {
     "id": "mecca",
-    "name": "Umm Al-Qura University, Mecca",
-    "name_sd": "ام القري يونيورسٽي، مڪه",
+    "name": {
+      en: "Umm Al-Qura University, Mecca",
+      ur: "ام القري يونيورسٽي، مڪه",
+      sd: "ام القري يونيورسٽي، مڪه"
+    },
     "apiMethodId": 4,
-    "description": "Umm Al-Qura University, Mecca calculation method",
-    "description_sd": "ام القري يونيورسٽي، مڪه جو حسابي طريقو",
+    "description": {
+      en: "Umm Al-Qura University, Mecca calculation method",
+      ur: "ام القري يونيورسٽي، مڪه جو حسابي طريقو",
+      sd: "ام القري يونيورسٽي، مڪه جو حسابي طريقو"
+    },
     "fajrAngle": 18.5,
     "ishaFixed": "90 min",
     "school": "shafi",
@@ -62,11 +94,17 @@ const prayerMothods =
   },
   {
     "id": "egyptian",
-    "name": "Egyptian General Authority of Survey",
-    "name_sd": "مصري جنرل اٿارٽي آف سروي",
+    "name": {
+      en: "Egyptian General Authority of Survey",
+      ur: "مصري جنرل اٿارٽي آف سروي",
+      sd: "مصري جنرل اٿارٽي آف سروي"
+    },
     "apiMethodId": 5,
-    "description": "Egyptian General Authority of Survey calculation method",
-    "description_sd": "مصري جنرل اٿارٽي آف سروي جو حسابي طريقو",
+    "description": {
+      en: "Egyptian General Authority of Survey calculation method",
+      ur: "مصري جنرل اٿارٽي آف سروي جو حسابي طريقو",
+      sd: "مصري جنرل اٿارٽي آف سروي جو حسابي طريقو"
+    },
     "fajrAngle": 19.5,
     "ishaAngle": 17.5,
     "school": "shafi",
@@ -74,11 +112,17 @@ const prayerMothods =
   },
   {
     "id": "custom",
-    "name": "Custom Setting",
-    "name_sd": "ڪسٽم سيٽنگ",
+    "name": {
+      en: "Custom Setting",
+      ur: "کسٹم سیٹنگ",
+      sd: "ڪسٽم سيٽنگ"
+    },
     "apiMethodId": 6,
-    "description": "Custom calculation method with user-defined parameters",
-    "description_sd": "ڪسٽم حسابي طريقو يوزر جي مقرر ڪيل پيرا ميٽرن سان",
+    "description": {
+      en: "Custom calculation method with user-defined parameters",
+      ur: "ڪسٽم حسابي طريقو يوزر جي مقرر ڪيل پيرا ميٽرن سان",
+      sd: "ڪسٽم حسابي طريقو يوزر جي مقرر ڪيل پيرا ميٽرن سان"
+    },
     "fajrAngle": 18,
     "ishaAngle": 18,
     "school": "hanafi",
@@ -86,10 +130,17 @@ const prayerMothods =
   },
   {
     "id": "tehran",
-    "name": "Institute of Geophysics, University of Tehran",
-    "name_sd": "انسٽيٽيوٽ آف جيو فزڪس، يونيورسٽي آف تهران",
+    "name": {
+      en: "Institute of Geophysics, University of Tehran",
+      ur: "انسٹی ٹیوٹ آف جیو فزکس، یونیورسٹی آف تہران",
+      sd: "انسٽيٽيوٽ آف جيو فزڪس، يونيورسٽي آف تهران"
+    },
     "apiMethodId": 7,
-    "description": "Institute of Geophysics, University of Tehran calculation method",
+    "description":{
+      en: "Institute of Geophysics, University of Tehran calculation method",
+      ur: "انسٹی ٹیوٹ آف جیو فزکس، یونیورسٹی آف تہران کا حسابی طریقہ",
+      sd: "انسٽيٽيوٽ آف جيو فزڪس، يونيورسٽي آف تهران جو حسابي طريقو"
+    },
     "description_sd": "انسٽيٽيوٽ آف جيو فزڪس، يونيورسٽي آف تهران جو حسابي طريقو",
     "fajrAngle": 17.7,
     "ishaAngle": 14,
@@ -98,7 +149,11 @@ const prayerMothods =
   },
   {
     "id": "gulf",
-    "name": "Gulf Region",
+    "name": {
+      en: "Gulf Region",
+      ur: "خلیج علاقہ",
+      sd: "خليج علائقو"
+    },
     "name_sd": "خليج علائقو",
     "apiMethodId": 8,
     "description": "Gulf Region calculation method",
@@ -110,11 +165,17 @@ const prayerMothods =
   },
   {
     "id": "kuwait",
-    "name": "Kuwait",
-    "name_sd": "ڪويت",
+    "name": {
+      en: "Kuwait Ministry of Awqaf and Islamic Affairs",
+      ur: "کویت وزارت اوقاف و امور اسلامی",
+      sd: "ڪويت وزارت اوقاف ۽ اسلامي معاملن"
+    },
     "apiMethodId": 9,
-    "description": "Kuwait calculation method",
-    "description_sd": "ڪويت جو حسابي طريقو",
+    "description": {
+      en: "Kuwait calculation method",
+      ur: "کویت کا حسابی طریقہ",
+      sd: "ڪويت جو حسابي طريقو"
+    },
     "fajrAngle": 18,
     "ishaAngle": 17.5,
     "school": "shafi",
@@ -122,11 +183,17 @@ const prayerMothods =
   },
   {
     "id": "qatar",
-    "name": "Qatar",
-    "name_sd": "قطر",
+    "name": {
+      en: "Qatar Ministry of Awqaf and Islamic Affairs",
+      ur: "قطر وزارت اوقاف و امور اسلامی",
+      sd: "قطر وزارت اوقاف ۽ اسلامي معاملن"
+    },
     "apiMethodId": 10,
-    "description": "Qatar calculation method",
-    "description_sd": "قطر جو حسابي طريقو",
+    "description": {
+      en: "Qatar calculation method",
+      ur: "قطر کا حسابی طریقہ",
+      sd: "قطر جو حسابي طريقو"
+    },
     "fajrAngle": 18,
     "ishaFixed": "90 min",
     "school": "shafi",
@@ -134,11 +201,17 @@ const prayerMothods =
   },
   {
     "id": "singapore",
-    "name": "Majlis Ugama Islam Singapura, Singapore",
-    "name_sd": "مجلس عاما اسلام سنگاپور، سنگاپور",
+    "name": {
+      en: "Majlis Ugama Islam Singapura",
+      ur: "مجلس عوام اسلام سنگاپور",
+      sd: "مجلس عوام اسلام سنگاپور"
+    },
     "apiMethodId": 11,
-    "description": "Majlis Ugama Islam Singapura calculation method",
-    "description_sd": "مجلس عاما اسلام سنگاپور جو حسابي طريقو",
+    "description": {
+      en: "Majlis Ugama Islam Singapura calculation method",
+      ur: "مجلس عوام اسلام سنگاپور کا حسابی طریقہ",
+      sd: "مجلس عوام اسلام سنگاپور جو حسابي طريقو"
+    },
     "fajrAngle": 20,
     "ishaAngle": 18,
     "school": "shafi",
@@ -146,11 +219,17 @@ const prayerMothods =
   },
   {
     "id": "france",
-    "name": "Union Organization islamic de France",
-    "name_sd": "يونين آرگنائيزيشن اسلامڪ ڊي فرانس",
+    "name": {
+      en: "Union Organization islamic de France",
+      ur: "یونین آرگنائيزيشن اسلامک ڈی فرانس",
+      sd: "يونين آرگنائيزيشن اسلامڪ ڊي فرانس"
+    },
     "apiMethodId": 12,
-    "description": "Union Organization islamic de France calculation method",
-    "description_sd": "يونين آرگنائيزيشن اسلامڪ ڊي فرانس جو حسابي طريقو",
+    "description": {
+      en: "Union Organization islamic de France calculation method",
+      ur: "یونین آرگنائيزيشن اسلامک ڈی فرانس کا حسابی طریقہ",
+      sd: "يونين آرگنائيزيشن اسلامڪ ڊي فرانس جو حسابي طريقو"
+    },
     "fajrAngle": 12,
     "ishaAngle": 12,
     "school": "shafi",
@@ -158,11 +237,17 @@ const prayerMothods =
   },
   {
     "id": "turkey",
-    "name": "Diyanet İşleri Başkanlığı, Turkey",
-    "name_sd": "ديانت اشليري باشڪانليگي، ترڪي",
+    "name": {
+      en: "Diyanet İşleri Başkanlığı",
+      ur: "ديانت اشليري باشڪانليگي",
+      sd: "ديانت اشليري باشڪانليگي"
+    },
     "apiMethodId": 13,
-    "description": "Diyanet İşleri Başkanlığı calculation method",
-    "description_sd": "ديانت اشليري باشڪانليگي جو حسابي طريقو",
+    "description": {
+      en: "Diyanet İşleri Başkanlığı calculation method",
+      ur: "ديانت اشليري باشڪانليگي جو حسابي طريقو",
+      sd: "ديانت اشليري باشڪانليگي جو حسابي طريقو"
+    },
     "fajrAngle": 18,
     "ishaAngle": 17,
     "school": "hanafi",
@@ -170,11 +255,17 @@ const prayerMothods =
   },
   {
     "id": "russia",
-    "name": "Spiritual Administration of Muslims of Russia",
-    "name_sd": "روس جي مسلمانن جي روحاني انتظاميه",
+    "name": {
+      en: "Spiritual Administration of Muslims of Russia",
+      ur: "روس کے مسلمانوں کی روحانی انتظامیہ",
+      sd: "روس جي مسلمانن جي روحاني انتظاميه"
+    },
     "apiMethodId": 14,
-    "description": "Spiritual Administration of Muslims of Russia calculation method",
-    "description_sd": "روس جي مسلمانن جي روحاني انتظاميه جو حسابي طريقو",
+    "description": {
+      en: "Spiritual Administration of Muslims of Russia calculation method",
+      ur: "روس کے مسلمانوں کی روحانی انتظامیہ کا حسابی طریقہ",
+      sd: "روس جي مسلمانن جي روحاني انتظاميه جو حسابي طريقو"
+    },
     "fajrAngle": 16,
     "ishaAngle": 15,
     "school": "hanafi",
@@ -182,8 +273,22 @@ const prayerMothods =
   }
 ];
 
+const defaultPrayerMethodForCountries = {
+  "PK": "karachi",
+};
+
 const getPrayerMethods = () => {
-  return prayerMothods;
+
+  const lang = getCurrentLanguage();
+
+  return prayerMethods.map(method => ({
+    label: method.name[lang],
+    value: method.id
+  }));
 }
 
-export { getPrayerMethods };
+const getPrayerMethodById = (id) => {
+  return prayerMethods.find(method => method.id === id);
+}
+
+export { getPrayerMethods, defaultPrayerMethodForCountries, getPrayerMethodById };

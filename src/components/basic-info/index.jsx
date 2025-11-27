@@ -5,25 +5,27 @@ import { getLanguages, saveLayoutDirection } from "../../utils/language";
 import {
   getCitysByCountryCode,
   getCountryList,
-  defaultCity,
-  defaultCountry,
 } from "../../data/static/locations";
-import { defaultImam, getImamList } from "../../utils/imam";
+import { getImamList } from "../../utils/imam";
+import {
+  getPrayerMethods,
+  defaultPrayerMethodForCountries,
+} from "../../utils/prayer-methods";
 import { getTranslation } from "../../utils/enums";
 
-const BasicInfoForm = () => {
-
-  const sessionValues = JSON.parse(sessionStorage.getItem("info")) || {};
-
+const BasicInfoForm = ({ sessionValues }) => {
   const [formData, setFormData] = useState({
-    lang: sessionValues.lang || getLanguages().defaultLanguage,
-    country: sessionValues.country || defaultCountry,
-    city: sessionValues.city || defaultCity,
-    imam: sessionValues.imam || defaultImam,
+    lang: sessionValues.lang,
+    country: sessionValues.country,
+    city: sessionValues.city,
+    imam: sessionValues.imam,
+    method: sessionValues.method,
+    school: sessionValues.school,
   });
 
   const saveToSessionStorage = (updatedData) => {
     sessionStorage.setItem("info", JSON.stringify(updatedData));
+    window.dispatchEvent(new Event("sessionValuesUpdated"));
   };
 
   const handleLanguageChange = (option) => {
@@ -34,7 +36,15 @@ const BasicInfoForm = () => {
   };
 
   const handleCountryChange = (option) => {
-    const updatedData = { ...formData, country: option.value, city: null };
+    // Get default method and imam for the selected country
+    const defaultMethod =
+      defaultPrayerMethodForCountries[option.value] || "karachi";
+    const updatedData = {
+      ...formData,
+      country: option.value,
+      city: null,
+      method: defaultMethod,
+    };
     setFormData(updatedData);
     saveToSessionStorage(updatedData);
   };
@@ -46,7 +56,14 @@ const BasicInfoForm = () => {
   };
 
   const handleImamChange = (option) => {
+    console.log("Imam changed to:", option.value);
     const updatedData = { ...formData, imam: option.value };
+    setFormData(updatedData);
+    saveToSessionStorage(updatedData);
+  };
+
+  const handleMethodChange = (option) => {
+    const updatedData = { ...formData, method: option.value };
     setFormData(updatedData);
     saveToSessionStorage(updatedData);
   };
@@ -59,12 +76,12 @@ const BasicInfoForm = () => {
         </div> */}
 
         <div className="p-8">
-          {/* 1x4 Grid Layout */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {/* 1x5 Grid Layout */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-5">
             {/* Language Dropdown */}
             <div className="flex flex-col">
               <Dropdown
-                label={getTranslation('LanguageLabel')}
+                label={getTranslation("LanguageLabel")}
                 options={getLanguages().languages}
                 preSelectOption={formData.lang}
                 onSelect={handleLanguageChange}
@@ -74,7 +91,7 @@ const BasicInfoForm = () => {
             {/* Country Dropdown */}
             <div className="flex flex-col">
               <Dropdown
-                label={getTranslation('CountryLabel')}
+                label={getTranslation("CountryLabel")}
                 options={getCountryList()}
                 preSelectOption={formData.country}
                 onSelect={handleCountryChange}
@@ -84,7 +101,7 @@ const BasicInfoForm = () => {
             {/* City Dropdown */}
             <div className="flex flex-col">
               <Dropdown
-                label={getTranslation('CityLabel')}
+                label={getTranslation("CityLabel")}
                 options={getCitysByCountryCode(formData.country)}
                 preSelectOption={formData.city}
                 onSelect={handleCityChange}
@@ -94,10 +111,20 @@ const BasicInfoForm = () => {
             {/* Imam Dropdown */}
             <div className="flex flex-col">
               <Dropdown
-                label={getTranslation('ImamLabel')}
+                label={getTranslation("ImamLabel")}
                 options={getImamList()}
                 preSelectOption={formData.imam}
                 onSelect={handleImamChange}
+              />
+            </div>
+
+            {/* Prayer Method Dropdown */}
+            <div className="flex flex-col">
+              <Dropdown
+                label={getTranslation("MethodLabel") || "Prayer Method"}
+                options={getPrayerMethods()}
+                preSelectOption={formData.method}
+                onSelect={handleMethodChange}
               />
             </div>
           </div>

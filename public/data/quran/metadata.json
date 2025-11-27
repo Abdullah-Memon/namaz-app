@@ -1,0 +1,23 @@
+{
+  "code": 200,
+  "data": {
+    "chapters": [
+      {
+        "id": 1,
+        "revelation_order": 5,
+        "revelation_place": "makkah",
+        "name_simple": "Al-Fatihah",
+        "name_arabic": "الفاتحة",
+        "verses_count": 7
+      },
+      {
+        "id": 2,
+        "revelation_order": 87,
+        "revelation_place": "madinah",
+        "name_simple": "Al-Baqarah",
+        "name_arabic": "البقرة",
+        "verses_count": 286
+      }
+    ]
+  }
+}
