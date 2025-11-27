@@ -35,7 +35,7 @@ const Card = ({ header, title, body, footer, size = 'full', className = '' }) =>
 
       {/* Footer */}
       {footer && (
-        <div className="border-t pt-3 mt-3">
+        <div className=" pt-3 mt-3">
           {typeof footer === 'string' ? (
             <p className="text-sm text-gray-500">{footer}</p>
           ) : (
