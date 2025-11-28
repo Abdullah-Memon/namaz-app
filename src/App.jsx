@@ -55,8 +55,8 @@ const App = () => {
       <BasicInfoForm sessionValues={sessionValues} />
       <Prayer sessionValues={sessionValues} />
       <Events />
-      <Compass />
-      <ArCompass />
+      {/* <Compass />
+      <ArCompass /> */}
       <Quran />
     </AppWrapper>
   );
