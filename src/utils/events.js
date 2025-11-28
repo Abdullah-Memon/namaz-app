@@ -1,21 +1,69 @@
 import { getCurrentLanguage } from "./language";
 
 const eventTypes = {
-  celebration: "Celebration",
-  worship: "Worship",
-  sad: "Sad",
-  fasting: "Fasting",
-  pilgrimage: "Pilgrimage",
-  commemoration: "Commemoration",
+  celebration: {
+    en: "Celebration",
+    ur: "جشن",
+    sd: "جشن",
+  },
+  worship: {
+    en: "Worship",
+    ur: "عبادت",
+    sd: "عبادت",
+  },
+  sad: {
+    en: "Sad",
+    ur: "غمگین",
+    sd: "اداس",
+  },
+  fasting: {
+    en: "Fasting",
+    ur: "روزہ",
+    sd: "روزو",
+  },
+  pilgrimage: {
+    en: "Pilgrimage",
+    ur: "زیارت",
+    sd: "زيارت",
+  },
+  commemoration: {
+    en: "Commemoration",
+    ur: "یادگار",
+    sd: "يادگار",
+  },
 };
 
 const observedBy = {
-  allMuslims: "All Muslims",
-  shia: "Shia",
-  sunni: "Sunni",
-  shiaPrimarily: "Shia (primarily)",
-  sunniPrimarily: "Sunni (primarily)",
-  shiaAndSomeSunni: "Shia + many Sunni",
+  allMuslims: {
+    en: "All Muslims",
+    ur: "تمام مسلمان",
+    sd: "سڀ مسلمان",
+  },
+  shia: {
+    en: "Shia community",
+    ur: "شیعہ برادری",
+    sd: "شيعہ ڪميونٽي",
+  },
+  sunni: {
+    en: "Sunni community",
+    ur: "اہل سنت برادری",
+    sd: "اهل سنت ڪميونٽي",
+  },
+  shiaPrimarily: {
+    en: "Shia (primarily)",
+    ur: "شیعہ (زیادہ تر)",
+    sd: "شيعہ (وڌيڪ تر)",
+  },
+  sunniPrimarily: {
+    en: "Sunni (primarily)",
+    ur: "اہل سنت (زیادہ تر)",
+    sd: "اهل سنت (وڌيڪ تر)",
+  },
+  shiaAndSomeSunni: {
+    en: "Shia and some Sunni",
+    ur: "شیعہ اور کچھ اہل سنت",
+    sd: "شيعہ ۽ ڪجهه اهل سنت",
+  },
 };
 
 const events = [
@@ -230,8 +278,8 @@ const getEvents = (month) => {
         name: event.event[lang],
         islamic_date: event.date,
         description: event.description ? event.description[lang] : "",
-        type: event.type,
-        observed_by: event.observed_by,
+        type: event.type[lang],
+        observed_by: event.observed_by[lang],
       }));
   } else {
     return events.map((event) => ({
@@ -239,8 +287,8 @@ const getEvents = (month) => {
       name: event.event[lang],
       islamic_date: event.date,
       description: event.description ? event.description[lang] : "",
-      type: event.type,
-      observed_by: event.observed_by,
+      type: event.type[lang],
+      observed_by: event.observed_by[lang],
     }));
   }
 };

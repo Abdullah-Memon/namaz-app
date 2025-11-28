@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import getIslmaicMonthNames, { getCurrentIslamicMonth } from '../../utils/islamic-month-names.js';
-import { getEvents } from '../../utils/events.js';
-import Dropdown from '../shared/dropdown.jsx';
-import Card from '../shared/card.jsx';
+import React, { useState, useEffect } from "react";
+import getIslmaicMonthNames, {
+  getCurrentIslamicMonth,
+} from "../../utils/islamic-month-names.js";
+import { getEvents } from "../../utils/events.js";
+import Dropdown from "../shared/dropdown.jsx";
+import Card from "../shared/card.jsx";
+import { getTranslation } from "../../utils/enums.js";
 
 const Events = () => {
   const [selectedMonth, setSelectedMonth] = useState(null);
@@ -21,7 +24,7 @@ const Events = () => {
 
         // Get current Islamic month
         const currentIslamicMonth = await getCurrentIslamicMonth();
-        
+
         if (currentIslamicMonth) {
           setCurrentMonth(currentIslamicMonth);
           setSelectedMonth(currentIslamicMonth.month);
@@ -30,7 +33,7 @@ const Events = () => {
           setSelectedMonth(1);
         }
       } catch (error) {
-        console.error('Error initializing Islamic months:', error);
+        console.error("Error initializing Islamic months:", error);
         setSelectedMonth(1);
       } finally {
         setLoading(false);
@@ -40,9 +43,26 @@ const Events = () => {
     initializeMonths();
   }, []);
 
+  // Listen for language changes and update month options
+  useEffect(() => {
+    const handleLanguageChange = () => {
+      const allMonths = getIslmaicMonthNames();
+      setMonthOptions(allMonths);
+    };
+
+    // Listen for session storage updates (language changes)
+    window.addEventListener("sessionValuesUpdated", handleLanguageChange);
+
+    // Cleanup listener on unmount
+    return () => {
+      window.removeEventListener("sessionValuesUpdated", handleLanguageChange);
+    };
+  }, []);
+
   const handleMonthSelect = (selectedValue) => {
     // Extract the month number from the selected option object
-    const monthNumber = typeof selectedValue === 'object' ? selectedValue.value : selectedValue;
+    const monthNumber =
+      typeof selectedValue === "object" ? selectedValue.value : selectedValue;
     setSelectedMonth(monthNumber);
   };
 
@@ -61,7 +81,7 @@ const Events = () => {
     <div className="module p-6">
       <div className="mb-6">
         <h2 className="text-2xl font-bold mb-4">Islamic Events</h2>
-        
+
         {/* Month Dropdown */}
         <div className="mb-6">
           <Dropdown
@@ -103,8 +123,6 @@ const Events = () => {
         {/* Selected Month Events */}
         {selectedMonth && (
           <div className="mt-6">
-      
-            
             {monthEvents.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {monthEvents.map((event) => (
@@ -112,27 +130,35 @@ const Events = () => {
                     key={event.id}
                     body={
                       <div className="flex flex-col gap-3">
-                        <h4 className="text-lg font-bold text-gray-800">
+                        <h4 className="text-3xl font-bold text-gray-800">
                           {event.name}
                         </h4>
-                        <p className="text-sm text-gray-700 leading-relaxed">
+                        <p className="text-2xl text-gray-700 leading-relaxed">
                           {event.description}
                         </p>
-                        <div className="flex gap-2 flex-wrap">
-                          <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                            Day {event.islamic_date.startDate.day}
-                          </span>
-                          <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full">
-                            {event.type}
+                        <div>
+                          {getTranslation("CelebrateByLabel")} :
+                          <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                            {event.observed_by}
                           </span>
                         </div>
                       </div>
                     }
                     footer={
-                      <div className="flex gap-2 flex-wrap">
-                        <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                          {event.observed_by}
-                        </span>
+                      <div className="grid grid-cols-3 gap-2 flex-wrap">
+                        <div>
+                          {getTranslation("DateLabel")} :
+                          <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                            {event.islamic_date.startDate.day}
+                          </span>
+                        </div>
+                        <div className="col-span-2">
+                          {getTranslation("EventLabel")} :
+                          <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full">
+                            {event.type}
+                          </span>
+                        </div>
+                        
                       </div>
                     }
                     className="bg-white"
@@ -143,7 +169,7 @@ const Events = () => {
               <Card
                 body={
                   <div className="text-center text-gray-500 py-4">
-                    <p>No events found for this month</p>
+                    {getTranslation("NoDataFound")}
                   </div>
                 }
                 className="bg-white"
@@ -154,6 +180,6 @@ const Events = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Events;

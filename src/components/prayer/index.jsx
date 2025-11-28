@@ -1,7 +1,7 @@
 import { useApi } from "../../hooks/useApi";
 import { useState, useEffect } from "react";
 import { getCurrentDate } from "../../utils/constant.js";
-import { getCityByCityCode } from "../../data/static/locations";
+import { getCityByCityCode, defaultCity } from "../../data/static/locations";
 import { getPrayerName } from "../../utils/prayer-names.js";
 import Card from "../shared/card.jsx";
 import { formatTime } from "../../utils/constant.js";
@@ -21,15 +21,26 @@ const subtractMinutes = (timeStr, minutes) => {
 };
 
 const Prayer = ({ sessionValues }) => {
+  // Get city data with fallback to default city
+  const cityData = getCityByCityCode(sessionValues?.city) || getCityByCityCode(defaultCity);
+  
+  // If still no city data found, use Karachi as hardcoded fallback
+  const fallbackCity = {
+    lat: 24.8607,
+    lng: 67.0011
+  };
+  
+  const selectedCity = cityData || fallbackCity;
+
   // Get prayer times using the custom hook
   const { data, loading, error, refresh } = useApi(
     "prayer",
     {
       date: getCurrentDate(),
-      latitude: getCityByCityCode(sessionValues.city).lat,
-      longitude: getCityByCityCode(sessionValues.city).lng,
-      method: sessionValues.method,
-      shafaq: sessionValues.imam,
+      latitude: selectedCity.lat,
+      longitude: selectedCity.lng,
+      method: sessionValues?.method || 5,
+      shafaq: sessionValues?.imam || "general",
     }
   );
 

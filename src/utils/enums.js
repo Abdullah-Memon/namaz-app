@@ -35,6 +35,31 @@ const dictionary = {
         sd: "ڳولا...",
         ur: "تلاش کریں...",
     },
+    DateLabel:{
+        en: "Date",
+        sd: "تاريخ",
+        ur: "تاریخ",
+    },
+    TimeLabel:{
+        en: "Time",
+        sd: "وقت",
+        ur: "وقت",
+    },
+    NoDataFound:{
+        en: "No data found",
+        sd: "ڪو مواد نه مليو",
+        ur: "کوئی مواد نہیں ملا",
+    },
+    EventLabel:{
+        en: "Occasion of",
+        sd: "موقعو",
+        ur: "موقع",
+    },
+    CelebrateByLabel:{
+        en: "Celebrate by",
+        sd: " ملهائڻ وارا",
+        ur: " منانے والا",
+    },
 };
 
 const getTranslation = (key) => {
