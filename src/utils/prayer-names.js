@@ -9,7 +9,7 @@ const prayerNames = {
   Sunrise: {
     en: "Sunrise",
     ur: "طلوع آفتاب",
-    sd: "سج جو اڀرڻ",
+    sd: "سج اڀرڻ",
   },
   Dhuhr: {
     en: "Dhuhr",
@@ -24,7 +24,7 @@ const prayerNames = {
   Sunset: {
     en: "Sunset",
     ur: "غروب آفتاب",
-    sd: "سج جو غروب ٿيڻ",
+    sd: "سج غروب ",
   },
   Maghrib: {
     en: "Maghrib",

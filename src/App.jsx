@@ -13,6 +13,7 @@ import { defaultCity, defaultCountry } from "./data/static/locations";
 import { defaultImamForCountries } from "./utils/imam";
 import { defaultLanguage } from "./utils/language";
 import { defaultPrayerMethodForCountries } from "./utils/prayer-methods";
+import { initializeGPS, isGPSSupported } from "./utils/gps";
 
 const App = () => {
   const getInitialSessionValues = () => {
@@ -32,6 +33,32 @@ const App = () => {
   };
 
   const [sessionValues, setSessionValues] = useState(getInitialSessionValues());
+
+  // Initialize GPS on app load
+  useEffect(() => {
+    const initGPS = async () => {
+      if (isGPSSupported()) {
+        try {
+          const result = await initializeGPS();
+          if (result.detectedCity && !result.fromCache) {
+            console.log('GPS detected city:', result.detectedCity);
+            // Trigger session values update
+            const stored = JSON.parse(sessionStorage.getItem('info'));
+            if (stored) {
+              setSessionValues(stored);
+            }
+          }
+        } catch (error) {
+          console.warn('GPS initialization failed:', error);
+        }
+      }
+    };
+
+    // Initialize GPS after a short delay to allow UI to load first
+    const timeoutId = setTimeout(initGPS, 1000);
+    
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -55,8 +82,8 @@ const App = () => {
       <BasicInfoForm sessionValues={sessionValues} />
       <Prayer sessionValues={sessionValues} />
       <Events />
-      {/* <Compass />
-      <ArCompass /> */}
+      {/* <Compass /> */}
+      {/* <ArCompass /> */}
       <Quran />
     </AppWrapper>
   );

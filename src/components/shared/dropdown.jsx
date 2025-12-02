@@ -81,12 +81,27 @@ const Dropdown = ({
 
   return (
     <div ref={dropdownRef} className={`relative w-full ${className}`}>
-      {label && <label className="block mb-1 text-sm font-medium text-gray-700">{label}</label>}
+      {label && <label className="block mb-1 text-sm font-medium" style={{ color: 'var(--color-text)' }}>{label}</label>}
       {/* Dropdown Trigger Button */}
       <button
         onClick={() => !disabled && setIsOpen(!isOpen)}
         disabled={disabled}
-        className="cursor-pointer w-full px-4 py-3 bg-white rounded-2xl hover:bg-opacity-70 transition flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed"
+        className="cursor-pointer w-full px-4 py-3 rounded-2xl transition flex items-center justify-between disabled:opacity-50 disabled:cursor-not-allowed"
+        style={{
+          backgroundColor: 'var(--color-card)',
+          color: 'var(--color-text)',
+          border: '1px solid var(--color-border)'
+        }}
+        onMouseEnter={(e) => {
+          if (!disabled) {
+            e.target.style.backgroundColor = 'var(--color-card-secondary)';
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!disabled) {
+            e.target.style.backgroundColor = 'var(--color-card)';
+          }
+        }}
       >
         <span className="truncate">{getDisplayLabel(selectedOption)}</span>
         <img
@@ -99,17 +114,28 @@ const Dropdown = ({
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-gray-200 bg-opacity-80 rounded-2xl shadow-lg z-50 overflow-hidden">
+        <div 
+          className="absolute top-full left-0 right-0 mt-2 rounded-2xl shadow-lg z-50 overflow-hidden"
+          style={{
+            backgroundColor: 'var(--color-dropdown-bg)',
+            border: '1px solid var(--color-dropdown-border)'
+          }}
+        >
           {/* Search Input */}
           {searchable && (
-            <div className="p-2 border-b border-gray-600">
+            <div className="p-2 border-b" style={{ borderColor: 'var(--color-dropdown-border)' }}>
               <input
                 ref={searchInputRef}
                 type="text"
                 placeholder={getTranslation('SearchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-3 py-1 text-md bg-white bg-opacity-50 rounded-lg border border-gray-600 focus:outline-none focus:border-gray-400 transition"
+                className="w-full px-3 py-1 text-md rounded-lg border focus:outline-none transition"
+                style={{
+                  backgroundColor: 'var(--color-input-bg)',
+                  color: 'var(--color-text)',
+                  borderColor: 'var(--color-border)'
+                }}
               />
             </div>
           )}
@@ -128,11 +154,21 @@ const Dropdown = ({
                   <li key={index}>
                     <button
                       onClick={() => handleSelect(option)}
-                      className={`cursor-pointer w-full text-right px-4 py-1 transition ${
-                        isSelected
-                          ? "bg-primary text-[#f1f1f1]"
-                          : "text-primary hover:bg-white"
-                      }`}
+                      className={`cursor-pointer w-full text-right px-4 py-1 transition`}
+                      style={{
+                        backgroundColor: isSelected ? 'var(--color-primary)' : 'transparent',
+                        color: isSelected ? 'var(--color-button-text)' : 'var(--color-text)'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isSelected) {
+                          e.target.style.backgroundColor = 'var(--color-card)';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isSelected) {
+                          e.target.style.backgroundColor = 'transparent';
+                        }
+                      }}
                     >
                       {getDisplayLabel(option)}
                     </button>
@@ -140,7 +176,7 @@ const Dropdown = ({
                 );
               })
             ) : (
-              <li className="px-4 py-3 text-[#999] text-center">
+              <li className="px-4 py-3 text-center" style={{ color: 'var(--color-secondary)' }}>
                 No options found
               </li>
             )}

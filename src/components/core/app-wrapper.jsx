@@ -2,11 +2,15 @@ import React, { useEffect } from "react";
 import Header from "./header";
 import Footer from "./footer";
 import { getLayoutDirection } from "../../utils/language";
+import { initializeTheme } from "../../utils/toggle-theme";
 
 const AppWrapper = ({ children }) => {
   useEffect(() => {
     const currentDirection = getLayoutDirection();
     document.documentElement.dir = currentDirection;
+    
+    // Initialize theme on app load
+    initializeTheme();
   }, []);
 
   // Listen for sessionStorage changes

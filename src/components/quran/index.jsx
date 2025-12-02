@@ -146,7 +146,7 @@ const Quran = ({ sessionValues }) => {
 
   return (
     <div className="module p-6">
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto">
         {/* Header */}
         <h2 className="text-3xl font-bold mb-6 text-center" style={{ fontFamily: 'var(--font-family-heading)' }}>
           {t.title}
@@ -332,20 +332,6 @@ const Quran = ({ sessionValues }) => {
           </div>
         )}
 
-        {/* Empty State */}
-        {!chaptersLoading && !versesLoading && verses.length === 0 && selectedSurah && (
-          <div className="text-center py-8 text-gray-500">
-            <p>No verses found for the selected surah.</p>
-            {process.env.NODE_ENV === 'development' && (
-              <div className="mt-4 text-xs text-left">
-                <p>Debug Info:</p>
-                <p>Selected Surah: {selectedSurah}</p>
-                <p>Current Page: {currentPage}</p>
-                <p>Verses Data: {JSON.stringify(versesData, null, 2)}</p>
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

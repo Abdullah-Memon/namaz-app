@@ -60,6 +60,20 @@ const dictionary = {
         sd: " ملهائڻ وارا",
         ur: " منانے والا",
     },
+    "FooterText": {
+        en: {
+            line1: "© 2025 Abdul Majid Bhurgri Institute of Language Engineering",
+            line2: "Culture, Tourism, Antiquities & Archives Department, Government of Sindh.",
+        },
+        ud: {
+            line1: "© 2025 عبدالمجید بھرگری انسٹی ٹیوٹ آف لینگویج انجینئرنگ",
+            line2: "ثقافت، سیاحت، آثار قدیمہ اور آرکائیوز ڈیپارٹمنٹ، حکومت سندھ۔",
+        },
+        sd: {
+            line1: "© 2025 عبدالمجيد ڀرڳڙي انسٽيٽيوٽ آف لينگويج انجنيئرنگ",
+            line2: "ثقافت، سياحت، آثار قديمه ۽ آرڪائيوز ڊپارٽمينٽ، حڪومت سنڌ۔",
+        }
+    }
 };
 
 const getTranslation = (key) => {

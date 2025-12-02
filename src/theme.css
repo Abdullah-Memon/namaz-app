@@ -16,11 +16,60 @@
   font-style: normal;
 }
 
-@theme{
+@font-face {
+  font-family: "ambile-regular";
+  src: url("./assets/fonts/regular/ambile-regular.ttf") format("truetype"),
+    url("./assets/fonts/regular/ambile-regular.woff") format("woff"),
+    url("./assets/fonts/regular/ambile-regular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ambile-heading";
+  src: url("./assets/fonts/heading/ambile-heading.ttf") format("truetype"),
+    url("./assets/fonts/heading/ambile-heading.woff") format("woff"),
+    url("./assets/fonts/heading/ambile-heading.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --font-family-regular: 'ambile-regular', sans-serif;
+  --font-family-heading: 'ambile-heading', sans-serif;
+}
+
+/* Light theme (default) */
+:root,
+[data-theme="light"] {
   --color-primary: #129490;
   --color-background: #F4F5F5;
   --color-text: #141301;
+  --color-secondary: #6B7280;
+  --color-border: #E5E7EB;
+  --color-card: #FFFFFF;
+  --color-card-secondary: #F9FAFB;
+  --color-button-bg: #129490;
+  --color-button-text: #FFFFFF;
+  --color-button-hover: #0F7A76;
+  --color-input-bg: #FFFFFF;
+  --color-dropdown-bg: #F3F4F6;
+  --color-dropdown-border: #D1D5DB;
+}
 
-  --font-family-regular: 'ambile-regular', sans-serif;
-  --font-family-heading: 'ambile-heading', sans-serif;
+/* Dark theme */
+[data-theme="dark"] {
+  --color-primary: #4FD1C7;
+  --color-background: #111827;
+  --color-text: #F9FAFB;
+  --color-secondary: #9CA3AF;
+  --color-border: #374151;
+  --color-card: #1C1C1E;
+  --color-card-secondary: #2C2C2E;
+  --color-button-bg: #4FD1C7;
+  --color-button-text: #111827;
+  --color-button-hover: #34D399;
+  --color-input-bg: #374151;
+  --color-dropdown-bg: #2C2C2E;
+  --color-dropdown-border: #4B5563;
 }

@@ -12,11 +12,17 @@ const Card = ({ header, title, body, footer, size = 'full', className = '' }) =>
   const sizeClass = sizeClasses[size] || sizeClasses.full;
 
   return (
-    <div className={`flex flex-col ${sizeClass} rounded-lg py-4 px-6 ${className}`}>
-      {/* Header/Title */}
+    <div 
+      className={`flex flex-col ${sizeClass} rounded-lg py-4 px-6 ${className}`}
+      style={{
+        backgroundColor: 'var(--color-card)',
+        border: '1px solid var(--color-border)',
+        color: 'var(--color-text)'
+      }}
+    >      {/* Header/Title */}
       {(header || title) && (
-        <div className="border-b pb-3 mb-3">
-          <h3 className="text-center font-bold text-xl text-gray-800">
+        <div className="border-b pb-3 mb-3" style={{ borderColor: 'var(--color-border)' }}>
+          <h3 className="text-center font-bold text-xl" style={{ color: 'var(--color-primary)' }}>
             {header || title}
           </h3>
         </div>
@@ -26,7 +32,7 @@ const Card = ({ header, title, body, footer, size = 'full', className = '' }) =>
       {body && (
         <div className="flex-1 overflow-y-auto">
           {typeof body === 'string' ? (
-            <p className="text-sm text-gray-600">{body}</p>
+            <p className="text-sm" style={{ color: 'var(--color-secondary)' }}>{body}</p>
           ) : (
             body
           )}
@@ -37,7 +43,7 @@ const Card = ({ header, title, body, footer, size = 'full', className = '' }) =>
       {footer && (
         <div className=" pt-3 mt-3">
           {typeof footer === 'string' ? (
-            <p className="text-sm text-gray-500">{footer}</p>
+            <p className="text-sm" style={{ color: 'var(--color-secondary)' }}>{footer}</p>
           ) : (
             footer
           )}

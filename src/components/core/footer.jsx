@@ -1,4 +1,5 @@
 import React from "react";
+import { getTranslation } from "../../utils/enums";
 
 const Footer = () => {
   return (
@@ -6,11 +7,11 @@ const Footer = () => {
       <div className="container flex items-center justify-center px-6 py-4 mx-auto">
         <div className="text-center">
           <p className="">
-            © ۲۰۲۵ عبدالماجد ڀرڳڙي انسٽيٽيوٽ آف لئنگئيج انجنيئرنگ حيدرآباد
+          {getTranslation("FooterText").line1}
           </p>
 
           <p className="">
-          ثقافت، سياحت، نوادرات ۽ آرڪائيوز کاتو — سنڌ حڪومت
+          {getTranslation("FooterText").line2}
           </p>
         </div>
       </div>
