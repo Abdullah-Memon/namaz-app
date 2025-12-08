@@ -57,7 +57,9 @@ const Tasbeeh = () => {
     }
   };
 
-  const handleReset = () => {
+  const handleReset = (e) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setCount(0);
   };
 
@@ -94,23 +96,45 @@ const Tasbeeh = () => {
         </p>
       </div>
 
-      {/* Main Counter Card - Optimized for 40+ Users */}
-      <div 
-        className="rounded-3xl p-10 shadow-2xl relative overflow-hidden"
-        style={{
-          background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-dark))'
-        }}
-      >
-        {/* Progress Ring Background */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-10">
-          <div className="w-[400px] h-[400px] rounded-full border-8 border-white"></div>
-        </div>
+      {/* Main Counter Card - Circular & Clickable */}
+      <div className="relative flex flex-col items-center gap-6">
+        <button
+          onClick={handleIncrement}
+          className="w-[300px] h-[300px] rounded-full shadow-2xl relative overflow-hidden transition-all duration-200 active:scale-95"
+          style={{
+            background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-dark))',
+            border: '8px solid rgba(255, 255, 255, 0.3)'
+          }}
+        >
+          {/* Progress Ring */}
+          <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 400 400">
+            <circle
+              cx="200"
+              cy="200"
+              r="190"
+              fill="none"
+              stroke="rgba(255, 255, 255, 0.2)"
+              strokeWidth="12"
+            />
+            <circle
+              cx="200"
+              cy="200"
+              r="190"
+              fill="none"
+              stroke="white"
+              strokeWidth="12"
+              strokeDasharray={`${2 * Math.PI * 190}`}
+              strokeDashoffset={`${2 * Math.PI * 190 * (1 - progress / 100)}`}
+              strokeLinecap="round"
+              style={{ transition: 'stroke-dashoffset 0.3s ease' }}
+            />
+          </svg>
 
-        <div className="relative z-10 text-center space-y-8">
-          {/* Count Display - Extra Large */}
-          <div>
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center justify-center h-full space-y-4">
+            {/* Count Display */}
             <div 
-              className="text-[120px] leading-none font-bold text-white mb-4"
+              className="text-[100px] leading-none font-bold text-white"
               style={{ fontFamily: 'var(--font-family-heading)' }}
             >
               {count}
@@ -118,59 +142,35 @@ const Tasbeeh = () => {
             <div className="text-white text-2xl font-semibold">
               of {target}
             </div>
-          </div>
 
-          {/* Progress Bar - Larger & More Visible */}
-          <div className="w-full bg-white/20 rounded-full h-5 overflow-hidden">
-            <div 
-              className="h-full bg-white rounded-full transition-all duration-300"
-              style={{ width: `${Math.min(progress, 100)}%` }}
-            ></div>
-          </div>
-
-          {/* Target Reached Message - Larger Text */}
-          {count >= target && (
-            <div className="animate-pulse">
-              <div className="text-white text-3xl font-bold mb-2">
-                ✨ Goal Reached! ✨
+            {/* Target Reached Message */}
+            {count >= target && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/20 backdrop-blur-sm animate-pulse">
+                <div className="text-center px-6">
+                  <div className="text-white text-3xl font-bold mb-2">
+                    ✨ Goal Reached! ✨
+                  </div>
+                  <div className="text-white text-lg font-semibold">
+                    May Allah accept your dhikr
+                  </div>
+                </div>
               </div>
-              <div className="text-white text-lg font-semibold">
-                May Allah accept your dhikr
-              </div>
-            </div>
-          )}
+            )}
+          </div>
+        </button>
 
-          {/* Increment Button - Much Larger (300px for better accessibility) */}
-          <button
-            onClick={handleIncrement}
-            className="w-[300px] h-[300px] mx-auto rounded-full font-bold text-4xl transition-all duration-200 active:scale-95 shadow-2xl"
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              color: 'var(--color-primary)',
-              border: '6px solid rgba(255, 255, 255, 0.5)',
-              boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)'
-            }}
-          >
-            <div className="flex flex-col items-center gap-3">
-              <div className="text-7xl">👆</div>
-              <div>TAP</div>
-            </div>
-          </button>
-
-          {/* Reset Button - Larger & More Visible */}
-          {/* <button
-            onClick={handleReset}
-            className="px-10 py-5 rounded-2xl text-xl font-bold transition-all duration-200 active:scale-95"
-            style={{
-              backgroundColor: 'rgba(255, 255, 255, 0.25)',
-              color: 'white',
-              border: '2px solid rgba(255, 255, 255, 0.4)',
-              minWidth: '200px'
-            }}
-          >
-            🔄 Reset Counter
-          </button> */}
-        </div>
+        {/* Small Reset Button Outside */}
+        <button
+          onClick={handleReset}
+          className="px-6 py-3 rounded-full text-base font-bold transition-all duration-200 active:scale-95"
+          style={{
+            backgroundColor: 'var(--color-card-secondary)',
+            color: 'var(--color-text)',
+            border: '2px solid var(--color-border)'
+          }}
+        >
+          🔄 Reset
+        </button>
       </div>
 
       {/* Quick Target Selection */}

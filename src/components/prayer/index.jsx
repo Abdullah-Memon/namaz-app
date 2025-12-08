@@ -247,8 +247,8 @@ const Prayer = ({ sessionValues }) => {
         </span>
       </div> */}
 
-      {/* Next Prayer Highlight */}
-      {upcomingPrayer && (
+      {/* Current Prayer Highlight */}
+      {currentPrayer && (
         <div 
           className="rounded-3xl p-8 shadow-lg"
           style={{
@@ -256,7 +256,7 @@ const Prayer = ({ sessionValues }) => {
           }}
         >
           <div className="flex items-center justify-between mb-4">
-            <span className="text-white/80 text-sm font-medium tracking-wider">NEXT PRAYER</span>
+            <span className="text-white/80 text-sm font-medium tracking-wider">CURRENT PRAYER</span>
             <img 
               src={bellIcon} 
               alt="Bell" 
@@ -268,19 +268,21 @@ const Prayer = ({ sessionValues }) => {
             className="text-white text-4xl font-bold mb-2"
             style={{ fontFamily: 'var(--font-family-heading)' }}
           >
-            {getPrayerName(upcomingPrayer.name)}
+            {getPrayerName(currentPrayer.name)}
           </h2>
           <div className="flex items-center gap-2 mb-6">
             <span className="text-xl">⏰</span>
             <span className="text-white text-2xl font-semibold time">
-              {formatTime(upcomingPrayer.time)}
+              {formatTime(currentPrayer.time)}
             </span>
           </div>
-          <div className="pt-4 border-t border-white/20">
-            <span className="text-white/80 text-sm">
-              Time remaining: {getTimeRemaining() || timeRemaining}
-            </span>
-          </div>
+          {upcomingPrayer && (
+            <div className="pt-4 border-t border-white/20">
+              <span className="text-white/80 text-sm">
+                {getTranslation("NextPrayerLabel")}: {getPrayerName(upcomingPrayer.name)} 
+              </span>
+            </div>
+          )}
         </div>
       )}
 

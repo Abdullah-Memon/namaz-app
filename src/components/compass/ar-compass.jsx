@@ -249,7 +249,7 @@ const ArCompass = ({ sessionValues, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black z-50 overflow-hidden">
+    <div className="fixed inset-0 bg-black z-[9999] overflow-hidden">
       {/* Camera Background */}
       <div className="absolute inset-0">
         <Webcam

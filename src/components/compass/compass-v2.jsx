@@ -76,7 +76,7 @@ const CompassV2 = ({ sessionValues }) => {
     };
 
     const startCompass = () => {
-      if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      if (typeof DeviceOrientationEvent !== "undefined" && typeof DeviceOrientationEvent.requestPermission === "function") {
         DeviceOrientationEvent.requestPermission()
           .then((res) => {
             if (res === "granted") {
@@ -87,10 +87,12 @@ const CompassV2 = ({ sessionValues }) => {
             }
           })
           .catch(() => setError("Error requesting orientation permission"));
-      } else {
+      } else if (typeof DeviceOrientationEvent !== "undefined") {
         // Non-iOS devices
         setPermissionGranted(true);
         window.addEventListener("deviceorientation", handleOrientation);
+      } else {
+        setError("Device orientation not supported in this browser");
       }
     };
 
@@ -145,10 +147,9 @@ const CompassV2 = ({ sessionValues }) => {
   const isAligned = Math.abs(angleDifference) <= ALIGNMENT_TOLERANCE;
 
   // Calculate needle rotation: needle should point to Qibla direction relative to device orientation
-  // When device faces north (0°) and Qibla is at 45°, needle points to 45°
-  // When device faces east (90°) and Qibla is at 45°, needle points to 45° - 90° = -45° (315°)
+  // Adding 180 degrees to correct the direction (needle was pointing opposite)
   const needleRotation =
-    deviceHeading !== null ? qiblaBearing - deviceHeading : 0;
+    deviceHeading !== null ? (qiblaBearing - deviceHeading + 180) % 360 : 0;
 
   return (
     <div

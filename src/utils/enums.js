@@ -188,6 +188,18 @@ const dictionary = {
     en: "Set your Goal",
     sd: "پنھنجو مقصد مقرر ڪريو",
     ur: "اپنا ہدف مقرر کریں",
+  },
+
+  NextPrayerLabel:{
+    en: "Next Prayer",
+    sd: "اڳيون نماز",
+    ur: "اگلی نماز",
+  },
+
+  at:{
+    en: "at",
+    sd: "۾",
+    ur: "پر",
   }
 };
 const getTranslation = (key) => {

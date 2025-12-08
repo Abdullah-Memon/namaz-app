@@ -2,14 +2,8 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import { registerServiceWorker } from './utils/pwa.js'
 
-// Register Service Worker for PWA functionality
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    registerServiceWorker();
-  });
-}
+// PWA is now handled by vite-plugin-pwa automatically
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
