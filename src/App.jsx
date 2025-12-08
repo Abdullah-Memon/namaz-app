@@ -5,7 +5,7 @@ import Prayer from "./components/prayer";
 import Events from "./components/events";
 import Compass from "./components/compass";
 import Quran from "./components/quran";
-import ArCompass from "./components/compass/ar-compass";
+import Tasbeeh from "./components/tasbeeh";
 
 import AppWrapper from "./components/core/app-wrapper";
 
@@ -77,14 +77,44 @@ const App = () => {
     };
   }, []);
 
+  const [activeTab, setActiveTab] = useState('home');
+
+  // Listen for tab changes
+  useEffect(() => {
+    const handleTabChange = (e) => {
+      setActiveTab(e.detail);
+    };
+    window.addEventListener('changeTab', handleTabChange);
+    return () => window.removeEventListener('changeTab', handleTabChange);
+  }, []);
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'home':
+        return (
+          <>
+            <BasicInfoForm sessionValues={sessionValues} />
+            <Prayer sessionValues={sessionValues} />
+          </>
+        );
+      case 'qibla':
+        return <Compass sessionValues={sessionValues} />;
+      case 'quran':
+        return <Quran />;
+      case 'tasbeeh':
+        return <Tasbeeh />;
+      default:
+        return <Prayer sessionValues={sessionValues} />;
+    }
+  };
+
   return (
-    <AppWrapper>
-      <BasicInfoForm sessionValues={sessionValues} />
-      <Prayer sessionValues={sessionValues} />
-      <Events />
-      {/* <Compass /> */}
-      {/* <ArCompass /> */}
-      <Quran />
+    <AppWrapper 
+      sessionValues={sessionValues} 
+      activeTab={activeTab} 
+      onTabChange={setActiveTab}
+    >
+      {renderContent()}
     </AppWrapper>
   );
 };

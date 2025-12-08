@@ -1,5 +1,5 @@
 // GPS utility for location detection and city matching
-import { getCitysByCountryCode, defaultCity, defaultCountry } from '../data/static/locations';
+import { getCitysByCountryCode, defaultCity, defaultCountry, getCityByCityCode } from '../data/static/locations';
 import { getCurrentLanguage } from './language';
 
 // GPS status constants
@@ -38,9 +38,6 @@ const findNearestCity = (latitude, longitude) => {
   const cities = getCitysByCountryCode(defaultCountry);
   let nearestCity = null;
   let minDistance = Infinity;
-
-  // Get city data with coordinates from locations
-  const { getCityByCityCode } = require('../data/static/locations');
   
   cities.forEach(city => {
     const cityData = getCityByCityCode(city.value);

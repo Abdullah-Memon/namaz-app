@@ -1,10 +1,12 @@
 import { useApi } from "../../hooks/useApi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getCurrentDate } from "../../utils/constant.js";
 import { getCityByCityCode, defaultCity } from "../../data/static/locations";
 import { getPrayerName } from "../../utils/prayer-names.js";
-import Card from "../shared/card.jsx";
 import { formatTime } from "../../utils/constant.js";
+import azanAudio from "../../assets/azan.mp3";
+import bellIcon from "../../assets/icons/bell.svg";
+import { getTranslation } from "../../utils/enums.js";
 
 // Helper function to subtract minutes from a time string (HH:MM)
 const subtractMinutes = (timeStr, minutes) => {
@@ -47,6 +49,78 @@ const Prayer = ({ sessionValues }) => {
   const [upcomingPrayer, setUpcomingPrayer] = useState(null);
   const [timeRemaining, setTimeRemaining] = useState("");
   const [currentPrayer, setCurrentPrayer] = useState(null);
+  const audioRef = useRef(null);
+  const [playedPrayers, setPlayedPrayers] = useState(new Set());
+
+  // Initialize audio element
+  useEffect(() => {
+    audioRef.current = new Audio(azanAudio);
+    audioRef.current.volume = 1.0;
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
+  // Check and play Azan when prayer time arrives
+  useEffect(() => {
+    if (!data?.data?.timings) return;
+
+    const checkAndPlayAzan = () => {
+      const now = new Date();
+      const currentTimeStr = `${now.getHours().toString().padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`;
+      const timings = data.data.timings;
+      
+      // Only check main prayer times (not Sunrise/Sunset)
+      const mainPrayers = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+      
+      for (const prayer of mainPrayers) {
+        const prayerTime = timings[prayer];
+        if (prayerTime === currentTimeStr) {
+          const prayerKey = `${getCurrentDate()}-${prayer}`;
+          
+          // Check if we haven't played Azan for this prayer today
+          if (!playedPrayers.has(prayerKey)) {
+            console.log(`Prayer time reached: ${prayer} at ${prayerTime}`);
+            
+            // Play Azan
+            if (audioRef.current) {
+              audioRef.current.play().catch(err => {
+                console.error('Error playing Azan:', err);
+              });
+            }
+            
+            // Mark this prayer as played
+            setPlayedPrayers(prev => new Set([...prev, prayerKey]));
+            
+            // Show browser notification if supported
+            if ('Notification' in window && Notification.permission === 'granted') {
+              new Notification(`${getPrayerName(prayer)} Time`, {
+                body: `It's time for ${getPrayerName(prayer)} prayer`,
+                icon: '/icon.png',
+                tag: prayer
+              });
+            }
+            
+            break;
+          }
+        }
+      }
+    };
+
+    // Check every second
+    const interval = setInterval(checkAndPlayAzan, 1000);
+    return () => clearInterval(interval);
+  }, [data, playedPrayers]);
+
+  // Request notification permission on mount
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+  }, []);
 
   // Calculate upcoming prayer and current prayer
   useEffect(() => {
@@ -100,157 +174,197 @@ const Prayer = ({ sessionValues }) => {
   }, [upcomingPrayer]);
 
   if (loading) {
-    return <div className="prayer-loading">Loading prayer times...</div>;
+    return (
+      <div className="px-6 py-8">
+        <div className="animate-pulse space-y-4">
+          <div className="h-32 rounded-3xl" style={{ backgroundColor: 'var(--color-card-secondary)' }}></div>
+          <div className="space-y-2">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="h-16 rounded-2xl" style={{ backgroundColor: 'var(--color-card-secondary)' }}></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (error && !data) {
     return (
-      <div className="prayer-error">
-        <p>Error: {error}</p>
-        <button onClick={refresh}>Retry</button>
+      <div className="px-6 py-8">
+        <div 
+          className="p-6 rounded-3xl text-center"
+          style={{ backgroundColor: 'var(--color-card)', borderColor: 'var(--color-border)' }}
+        >
+          <p style={{ color: 'var(--color-text)' }}>Error: {error}</p>
+          <button 
+            onClick={refresh}
+            className="mt-4 px-6 py-3 rounded-2xl font-semibold"
+            style={{ backgroundColor: 'var(--color-button-bg)', color: 'var(--color-button-text)' }}
+          >
+            Retry
+          </button>
+        </div>
       </div>
     );
   }
 
   if (!data) {
-    return <div className="prayer-empty">No prayer data available</div>;
+    return <div className="px-6 py-8 text-center" style={{ color: 'var(--color-secondary)' }}>No prayer data available</div>;
   }
 
   const timings = data.data?.timings || {};
 
+  // Calculate time until next prayer in readable format
+  const getTimeRemaining = () => {
+    if (!upcomingPrayer) return null;
+    const now = new Date();
+    const [upHour, upMin] = upcomingPrayer.time.split(":").map(Number);
+    const upcomingTime = new Date();
+    upcomingTime.setHours(upHour, upMin, 0);
+    const diff = upcomingTime - now;
+    if (diff > 0) {
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      return `${hours}h ${mins}m`;
+    }
+    return null;
+  };
+
   return (
-    <div className="module">
+    <div className="px-6 py-8 space-y-8">
 
-      {/* Main Layout: Left (5 prayers) and Right (Current Prayer) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 h-96">
-        
-        {/* left  side: Current Prayer */}
-        <div className="lg:col-span-1">
-          <Card
-            size="full"
-            body={
-              currentPrayer ? (
-                <div className="flex flex-col justify-center items-center h-full">
-                  <h1 className="text-9xl">{getPrayerName(currentPrayer.name)}</h1>
-                  <p className="text-5xl font-bold time text-gray-700 mb-4">{formatTime(currentPrayer.time) }</p>
-                </div>
-              ) : (
-                <div className="flex flex-col justify-center items-center h-full">
-                  <p className="text-gray-500">No active prayer at this time</p>
-                </div>
-              )
-            }
-            className="bg-white"
-          />
+      {/* Azan Notification Badge */}
+      {/* <div 
+        className="flex items-center justify-center gap-2 p-3 rounded-xl"
+        style={{ 
+          backgroundColor: 'var(--color-card-secondary)', 
+          border: '1px solid var(--color-border)' 
+        }}
+      >
+        <span className="text-lg">🔔</span>
+        <span className="text-sm font-medium" style={{ color: 'var(--color-text)' }}>
+          Azan will play automatically at prayer time
+        </span>
+      </div> */}
+
+      {/* Next Prayer Highlight */}
+      {upcomingPrayer && (
+        <div 
+          className="rounded-3xl p-8 shadow-lg"
+          style={{
+            background: 'linear-gradient(135deg, var(--color-primary), var(--color-primary-dark))'
+          }}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-white/80 text-sm font-medium tracking-wider">NEXT PRAYER</span>
+            <img 
+              src={bellIcon} 
+              alt="Bell" 
+              className="w-6 h-6" 
+              style={{ filter: 'brightness(0) invert(1)' }} 
+            />
+          </div>
+          <h2 
+            className="text-white text-4xl font-bold mb-2"
+            style={{ fontFamily: 'var(--font-family-heading)' }}
+          >
+            {getPrayerName(upcomingPrayer.name)}
+          </h2>
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-xl">⏰</span>
+            <span className="text-white text-2xl font-semibold time">
+              {formatTime(upcomingPrayer.time)}
+            </span>
+          </div>
+          <div className="pt-4 border-t border-white/20">
+            <span className="text-white/80 text-sm">
+              Time remaining: {getTimeRemaining() || timeRemaining}
+            </span>
+          </div>
         </div>
+      )}
 
-        {/* Right side: 5 Prayer Times distributed equally */}
-        <div className="lg:col-span-1 flex flex-col gap-3">
+      {/* Prayer Times List */}
+      <div>
+        {/* <h3 
+          className="text-lg font-semibold mb-4"
+          style={{ color: 'var(--color-text)' }}
+        >
+          Prayer Times
+        </h3> */}
+        <div className="space-y-2">
           {["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"].map((prayer) => {
-            const isCurrentPrayer = currentPrayer?.name === prayer;
-            const allPrayers = ["Fajr", "Sunrise", "Dhuhr", "Asr", "Sunset", "Maghrib", "Isha"];
-            const currentIndex = allPrayers.indexOf(prayer);
-            let nextPrayerTime = null;
-            
-            // Find the next prayer in the list
-            for (let i = currentIndex + 1; i < allPrayers.length; i++) {
-              if (timings[allPrayers[i]]) {
-                nextPrayerTime = timings[allPrayers[i]];
-                break;
-              }
-            }
-            
-            // Calculate upper range
-            let upperRangeTime = null;
-            if (prayer === "Maghrib") {
-              // Maghrib: add 15-20 mins range
-              const [maghribHours, maghribMins] = timings[prayer].split(":").map(Number);
-              const endTime = new Date();
-              endTime.setHours(maghribHours, maghribMins + 20, 0);
-              const endHours = endTime.getHours();
-              const endMins = endTime.getMinutes();
-              upperRangeTime = `${endHours.toString().padStart(2, "0")}:${endMins.toString().padStart(2, "0")}`;
-            } else if (nextPrayerTime) {
-              // For other prayers: subtract 5 mins from next prayer
-              upperRangeTime = subtractMinutes(nextPrayerTime, 5);
-            }
+            const isUpcoming = upcomingPrayer?.name === prayer;
+            const isCompleted = currentPrayer && ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"].indexOf(currentPrayer.name) >= ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"].indexOf(prayer) && !isUpcoming;
             
             return (
-              <div key={prayer} className="flex-1 min-h-0">
-                <Card
-                  size="full"
-                  className={`${isCurrentPrayer ? 'bg-primary text-white' : 'bg-white'}`}
-                  body={
-                    <div className="flex justify-between items-center h-full">
-                      <span className={`text-lg font-semibold ${isCurrentPrayer ? 'text-white' : 'text-gray-700'}`}>{getPrayerName(prayer)}</span>
-                      <span className={`text-2xl font-bold time ${isCurrentPrayer ? 'text-white' : 'text-primary'}`}>
-                        {timings[prayer] ? `${formatTime(timings[prayer])}${upperRangeTime ? ` - ${formatTime(upperRangeTime)}` : ''}` : "N/A"}
-                      </span>
-                    </div>
-                  }
-                />
+              <div
+                key={prayer}
+                className="flex items-center justify-between p-4 rounded-2xl transition-all duration-200"
+                style={{
+                  backgroundColor: isUpcoming ? 'var(--color-next-bg)' : 'var(--color-card-secondary)',
+                  border: isUpcoming ? '2px solid var(--color-primary)' : '1px solid var(--color-border)'
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: isCompleted 
+                        ? 'var(--color-completed)' 
+                        : isUpcoming 
+                          ? 'var(--color-primary)' 
+                          : 'var(--color-secondary)'
+                    }}
+                  />
+                  <span 
+                    className="font-medium"
+                    style={{
+                      color: isUpcoming ? 'var(--color-primary)' : 'var(--color-text)'
+                    }}
+                  >
+                    {getPrayerName(prayer)}
+                  </span>
+                </div>
+                <span 
+                  className="text-lg font-semibold time"
+                  style={{
+                    color: isUpcoming ? 'var(--color-primary)' : 'var(--color-secondary)'
+                  }}
+                >
+                  {timings[prayer] ? formatTime(timings[prayer]) : "N/A"}
+                </span>
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* Bottom Section: 3 Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Last Prayer Time */}
-        <Card
-        className="bg-white"
-          body={
-            <div className="flex flex-col items-center justify-center py-4">
-              <p className="text-3xl font-bold text-primary mb-2 time">
-                {currentPrayer?.time ? formatTime(currentPrayer.time) : "N/A"}
-              </p>
-              <p className="text-gray-600 text-sm">
-                {currentPrayer?.name ? getPrayerName(currentPrayer.name) : "No prayer yet"}
-              </p>
-            </div>
-          }
-        />
-
-        {/* Upcoming Prayer */}
-        <Card
-        className="bg-white"
-          body={
-            <div className="flex flex-col items-center justify-center py-4">
-              <p className="text-3xl font-bold text-primary mb-2">
-                {upcomingPrayer?.name ? getPrayerName(upcomingPrayer.name) : "N/A"}
-              </p>
-              <p className="text-gray-600 text-sm time">
-                {upcomingPrayer?.time ? formatTime(upcomingPrayer.time) : "No upcoming prayer"}
-              </p>
-            </div>
-          }
-        />
-
-        {/* Time Remaining */}
-        <Card
-        className="bg-white"
-          body={
-            <div className="flex flex-col items-center justify-center py-4">
-              <p className="text-3xl font-bold text-primary mb-2">
-                {timeRemaining || "Calculating..."}
-              </p>
-              <p className="text-gray-600 text-sm">Until next prayer</p>
-            </div>
-          }
-        />
-      </div>
-
-      {/* Refresh Button */}
-      {/* <div className="mt-8 text-center">
-        <button
-          onClick={refresh}
-          disabled={loading}
-          className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 transition-colors"
+      {/* Quick Actions */}
+      <div className="grid grid-cols-2 gap-3">
+        <button 
+          className="p-6 rounded-2xl font-medium transition-all duration-200 hover:scale-105"
+          style={{
+            backgroundColor: 'var(--color-next-bg)',
+            color: 'var(--color-primary)',
+            border: '1px solid var(--color-primary)'
+          }}
+          onClick={() => window.dispatchEvent(new CustomEvent('changeTab', { detail: 'qibla' }))}
         >
-          {loading ? "Refreshing..." : "Refresh"}
+          🧭 {getTranslation("QiblaDirectionLabel")}
         </button>
-      </div> */}
+        <button 
+          className="p-6 rounded-2xl font-medium transition-all duration-200 hover:scale-105"
+          style={{
+            backgroundColor: 'var(--color-card-secondary)',
+            color: 'var(--color-text)',
+            border: '1px solid var(--color-border)'
+          }}
+          onClick={() => window.dispatchEvent(new CustomEvent('changeTab', { detail: 'tasbeeh' }))}
+        >
+          📿 {getTranslation("TasbeehCounterTitle")}
+        </button>
+      </div>
     </div>
   );
 };

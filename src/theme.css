@@ -42,34 +42,52 @@
 /* Light theme (default) */
 :root,
 [data-theme="light"] {
-  --color-primary: #129490;
-  --color-background: #F4F5F5;
-  --color-text: #141301;
+  --color-primary: #f97316;
+  --color-primary-light: #fb923c;
+  --color-primary-dark: #ea580c;
+  --color-background: #ffffff;
+  --color-text: #111827;
   --color-secondary: #6B7280;
-  --color-border: #E5E7EB;
-  --color-card: #FFFFFF;
-  --color-card-secondary: #F9FAFB;
-  --color-button-bg: #129490;
-  --color-button-text: #FFFFFF;
-  --color-button-hover: #0F7A76;
-  --color-input-bg: #FFFFFF;
+  --color-border: #fef3c7;
+  --color-card: #ffffff;
+  --color-card-secondary: #fff7ed;
+  --color-button-bg: #f97316;
+  --color-button-text: #ffffff;
+  --color-button-hover: #ea580c;
+  --color-input-bg: #F9FAFB;
   --color-dropdown-bg: #F3F4F6;
   --color-dropdown-border: #D1D5DB;
+  --color-success: #10b981;
+  --color-completed: #22c55e;
+  --color-next-bg: #fff7ed;
+  --color-next-border: #fed7aa;
+  
+  /* Icon filters for SVG coloring */
+  --icon-filter: brightness(0) saturate(100%) invert(9%) sepia(8%) saturate(1093%) hue-rotate(182deg) brightness(95%) contrast(93%);
 }
 
 /* Dark theme */
 [data-theme="dark"] {
-  --color-primary: #4FD1C7;
+  --color-primary: #fb923c;
+  --color-primary-light: #fdba74;
+  --color-primary-dark: #f97316;
   --color-background: #111827;
   --color-text: #F9FAFB;
   --color-secondary: #9CA3AF;
   --color-border: #374151;
-  --color-card: #1C1C1E;
-  --color-card-secondary: #2C2C2E;
-  --color-button-bg: #4FD1C7;
-  --color-button-text: #111827;
-  --color-button-hover: #34D399;
+  --color-card: #1F2937;
+  --color-card-secondary: #374151;
+  --color-button-bg: #f97316;
+  --color-button-text: #ffffff;
+  --color-button-hover: #ea580c;
   --color-input-bg: #374151;
-  --color-dropdown-bg: #2C2C2E;
+  --color-dropdown-bg: #1F2937;
   --color-dropdown-border: #4B5563;
+  --color-success: #10b981;
+  --color-completed: #22c55e;
+  --color-next-bg: rgba(251, 146, 60, 0.1);
+  --color-next-border: #9a3412;
+  
+  /* Icon filters for SVG coloring */
+  --icon-filter: brightness(0) saturate(100%) invert(98%) sepia(1%) saturate(2065%) hue-rotate(182deg) brightness(104%) contrast(97%);
 }

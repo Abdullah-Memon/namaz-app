@@ -1,187 +1,140 @@
-import React, { useState, useEffect } from 'react';
-import { getCityByCityCode, defaultCity } from "../../data/static/locations";
+import React, { useState } from 'react';
+import CompassV2 from './compass-v2';
+import ArCompass from './ar-compass';
+import { getTranslation } from '../../utils/enums';
 
 const Compass = ({ sessionValues }) => {
-  const [qiblaBearing, setQiblaBearing] = useState(0);        // Fixed bearing from North
-  const [deviceHeading, setDeviceHeading] = useState(null);   // What direction phone is facing - null until first reading
-  const [location, setLocation] = useState(null);
-  const [error, setError] = useState(null);
-
-  const KAABA_LAT = 21.422507;
-  const KAABA_LNG = 39.826206;
-
-  const cityData = getCityByCityCode(sessionValues?.city) || getCityByCityCode(defaultCity);
-
-  // Accurate Qibla bearing calculation
-  const calculateQibla = (lat, lng) => {
-    const φK = KAABA_LAT * Math.PI / 180;
-    const λK = KAABA_LNG * Math.PI / 180;
-    const φ = lat * Math.PI / 180;
-    const λ = lng * Math.PI / 180;
-
-    const y = Math.sin(λK - λ);
-    const x = Math.cos(φ) * Math.tan(φK) - Math.sin(φ) * Math.cos(λK - λ);
-
-    let angle = Math.atan2(y, x) * 180 / Math.PI;
-    return (angle + 360) % 360;
-  };
-
-  // Get accurate heading (True North) — works on iOS & Android
-  useEffect(() => {
-    const handleOrientation = (event) => {
-      let heading = 0;
-
-      if (event.webkitCompassHeading !== undefined) {
-        // iOS - webkitCompassHeading gives true heading
-        heading = event.webkitCompassHeading;
-      } else if (event.alpha !== null) {
-        // Android - alpha gives rotation from north (0-360)
-        heading = event.alpha;
-      }
-
-      setDeviceHeading(Math.round(heading));
-    };
-
-    const startCompass = () => {
-      if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-        DeviceOrientationEvent.requestPermission()
-          .then(res => {
-            if (res === 'granted') {
-              window.addEventListener('deviceorientation', handleOrientation);
-            }
-          })
-          .catch(() => setError("Compass permission denied"));
-      } else {
-        window.addEventListener('deviceorientation', handleOrientation);
-      }
-    };
-
-    startCompass();
-    return () => window.removeEventListener('deviceorientation', handleOrientation);
-  }, []);
-
-  // Set location and calculate Qibla
-  const setLocationAndQibla = (lat, lng, name) => {
-    const qibla = calculateQibla(lat, lng);
-    setQiblaBearing(qibla);
-    setLocation({ name, lat: lat.toFixed(4), lng: lng.toFixed(4), qibla: qibla.toFixed(1) });
-    setError(null);
-  };
-
-  const getGPS = () => {
-    navigator.geolocation.getCurrentPosition(
-      pos => setLocationAndQibla(pos.coords.latitude, pos.coords.longitude, "GPS Location"),
-      () => setError("GPS access denied"),
-      { enableHighAccuracy: true, timeout: 10000 }
-    );
-  };
-
-  useEffect(() => {
-    if (cityData) {
-      setLocationAndQibla(cityData.lat, cityData.lng, cityData.city?.en || "Selected City");
-    }
-  }, [cityData]);
-
-  // This is the ONLY angle we rotate: how much to turn so Kaaba is in front
-  // Only calculate when we have a valid device heading
-  const angleToTurn = deviceHeading !== null ? ((qiblaBearing - deviceHeading + 360) % 360) : 0;
-  const isFacingQibla = deviceHeading !== null && (angleToTurn < 8 || angleToTurn > 352);
+  const [activeTab, setActiveTab] = useState('traditional');
+  const [isArActive, setIsArActive] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-6">
-      <div className="w-full max-w-md text-center">
-
-        <h1 className="text-5xl font-bold text-cyan-400 mb-3 tracking-widest">Qibla</h1>
-        <p className="text-gray-400 text-sm mb-10">Direction to the Holy Kaaba</p>
-
-        <div className="flex justify-center gap-4 mb-8">
-          <button onClick={getGPS} className="px-6 py-3 bg-cyan-900/60 hover:bg-cyan-800 border-2 border-cyan-500 text-cyan-300 rounded-xl font-semibold transition">
-            GPS
-          </button>
-          <button onClick={() => cityData && setLocationAndQibla(cityData.lat, cityData.lng)} className="px-6 py-3 bg-cyan-900/60 hover:bg-cyan-800 border-2 border-cyan-500 text-cyan-300 rounded-xl font-semibold transition">
-            City
-          </button>
-        </div>
-
-        {error && <div className="p-4 bg-red-900/50 border border-red-500 text-red-300 rounded-xl mb-6">{error}</div>}
-
-        {location && (
-          <div className="p-5 bg-gray-900/50 border border-cyan-800 rounded-2xl mb-10">
-            <p className="text-cyan-400 text-xs font-bold tracking-wider">LOCATION</p>
-            <p className="text-white font-bold text-lg">{location.name}</p>
-            <p className="text-gray-400 text-xs">{location.lat}°, {location.lng}°</p>
-            <p className="text-cyan-300 text-sm mt-2">Qibla Bearing: {location.qibla}° from North</p>
+    <div style={{ backgroundColor: 'var(--color-background)', fontFamily: 'var(--font-family-regular)' }}>
+      {/* Header Section */}
+      <div className="px-6 py-6">
+        <div className="max-w-7xl mx-auto">
+          {/* Title Section */}
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-family-heading)' }}>
+              {getTranslation('CompassTitle')}
+            </h1>
+            <p className="text-sm max-w-7xl mx-auto leading-relaxed" style={{ color: 'var(--color-secondary)' }}>
+              {getTranslation('CompassDescription')}
+            </p>
           </div>
-        )}
 
-        {/* PROFESSIONAL FIXED COMPASS */}
-        <div className="relative w-80 h-80 mx-auto mb-12">
-
-          {/* Outer Glow */}
-          <div className="absolute inset-0 rounded-full bg-cyan-400 blur-3xl opacity-30 animate-pulse"></div>
-
-          {/* Fixed Compass Body (N always at top) */}
-          <div className="absolute inset-0 rounded-full bg-black border-8 border-cyan-500 shadow-2xl shadow-cyan-500/70">
-
-            {/* Fixed North Marker */}
-            <div className="absolute top-6 left-1/2 -translate-x-1/2">
-              <div className="w-4 h-16 bg-cyan-400 rounded-full shadow-lg"></div>
-              <p className="text-cyan-300 text-2xl font-bold mt-4">N</p>
-            </div>
-
-            {/* Show loading or compass needle */}
-            {deviceHeading === null ? (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-cyan-400 text-lg font-semibold">Calibrating compass...</p>
-              </div>
-            ) : (
-              /* Qibla Needle — Rotates to show correct direction */
-              <div 
-                className="absolute inset-0 origin-center transition-transform duration-700 ease-out"
-                style={{ transform: `rotate(${angleToTurn}deg)` }}
+          {/* Tab Navigation */}
+          <div className="flex gap-2 mb-6">
+            <div className="flex flex-1 rounded-xl p-1" style={{ backgroundColor: 'var(--color-card-secondary)', border: '1px solid var(--color-border)' }}>
+              <button
+                onClick={() => setActiveTab('traditional')}
+                className={`flex-1 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200`}
+                style={{
+                  backgroundColor: activeTab === 'traditional' ? 'var(--color-primary)' : 'transparent',
+                  color: activeTab === 'traditional' ? 'var(--color-button-text)' : 'var(--color-text)'
+                }}
               >
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  {/* Long Cyan Arrow */}
-                  <div className="w-6 h-56 bg-gradient-to-t from-cyan-600 via-cyan-400 to-cyan-300 rounded-t-full shadow-2xl shadow-cyan-400/80"></div>
-                  {/* Kaaba Icon */}
-                  <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-cyan-300 rounded-full border-6 border-black shadow-2xl flex items-center justify-center">
-                    <span className="text-black text-4xl font-bold">Kaaba</span>
-                  </div>
-                </div>
-              </div>
-            )}
+                {getTranslation('CompassTraditionalTab')}
+              </button>
+              
+              <button
+                onClick={() => setActiveTab('ar')}
+                className={`flex-1 px-4 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200`}
+                style={{
+                  backgroundColor: activeTab === 'ar' ? 'var(--color-primary)' : 'transparent',
+                  color: activeTab === 'ar' ? 'var(--color-button-text)' : 'var(--color-text)'
+                }}
+              >
+                {getTranslation('CompassARTab')}
+              </button>
+            </div>
+          </div>
 
-            {/* Center Hub */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 bg-gradient-to-br from-cyan-400 to-cyan-700 rounded-full shadow-2xl border-6 border-black z-10"></div>
+          {/* Quick Access Buttons */}
+          {/* <div className="flex flex-wrap gap-2 justify-center">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg" style={{ backgroundColor: 'var(--color-card-secondary)' }}>
+              <span className="text-sm">📍</span>
+              <span className="text-xs font-medium" style={{ color: 'var(--color-text)' }}>GPS</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg" style={{ backgroundColor: 'var(--color-card-secondary)' }}>
+              <span className="text-sm">🎯</span>
+              <span className="text-xs font-medium" style={{ color: 'var(--color-text)' }}>Precise</span>
+            </div>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg" style={{ backgroundColor: 'var(--color-card-secondary)' }}>
+              <span className="text-sm">⚡</span>
+              <span className="text-xs font-medium" style={{ color: 'var(--color-text)' }}>Real-time</span>
+            </div>
+          </div> */}
+        </div>
+      </div>
 
-            {/* Alignment Glow */}
-            {isFacingQibla && (
-              <div className="absolute inset-0 rounded-full bg-cyan-400 blur-2xl animate-pulse opacity-60"></div>
-            )}
+      {/* Dynamic Content Section */}
+      <div className="relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{ 
+            backgroundImage: `radial-gradient(circle at 25% 25%, var(--color-primary) 0%, transparent 50%), 
+                              radial-gradient(circle at 75% 75%, var(--color-primary) 0%, transparent 50%)`,
+            backgroundSize: '100px 100px'
+          }}></div>
+        </div>
+
+        {/* Active Component */}
+        <div className="relative z-10">
+          <div className={`transition-all duration-700 ease-in-out transform ${
+            activeTab === 'traditional' ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none absolute inset-0'
+          }`}>
+            {activeTab === 'traditional' && <CompassV2 sessionValues={sessionValues} />}
+          </div>
+          
+          {/* AR Mode Button */}
+          {activeTab === 'ar' && !isArActive && (
+            <div className="flex items-center justify-center py-12">
+              <button
+                onClick={() => setIsArActive(true)}
+                className="px-8 py-4 rounded-2xl font-bold text-base transition-all duration-200 hover:scale-105 active:scale-95 shadow-lg"
+                style={{
+                  backgroundColor: 'var(--color-primary)',
+                  color: 'var(--color-button-text)'
+                }}
+              >
+                🚀 {getTranslation('CompassARTab')}
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Footer Information */}
+      <div className="px-6 py-8">
+        <div className="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <div className="text-xl mb-1">🕌</div>
+            <p className="text-xs font-medium" style={{ color: 'var(--color-text)' }}>
+              {getTranslation('CompassExtraText').footer1.title}
+            </p>
+          </div>
+          <div>
+            <div className="text-xl mb-1">🔄</div>
+            <p className="text-xs font-medium" style={{ color: 'var(--color-text)' }}>
+              {getTranslation('CompassExtraText').footer2.title}
+            </p>
+          </div>
+          <div>
+            <div className="text-xl mb-1">✨</div>
+            <p className="text-xs font-medium" style={{ color: 'var(--color-text)' }}>
+              {getTranslation('CompassExtraText').footer3.title}
+            </p>
           </div>
         </div>
-
-        {/* Final Feedback */}
-        <div className={`inline-block px-12 py-8 rounded-3xl border-4 ${isFacingQibla ? 'bg-green-900/60 border-green-500' : 'bg-gray-900/80 border-cyan-500'} transition-all duration-500`}>
-          <p className="text-6xl font-bold text-white tabular-nums">
-            {deviceHeading !== null ? Math.round(angleToTurn) : '--'}°
-          </p>
-          <p className={`text-2xl font-bold mt-3 ${isFacingQibla ? 'text-green-400' : 'text-cyan-300'}`}>
-            {deviceHeading === null 
-              ? "Calibrating..." 
-              : isFacingQibla 
-                ? "You are facing the Kaaba!" 
-                : angleToTurn < 180 
-                  ? "Turn Left" 
-                  : "Turn Right"
-            }
-          </p>
-        </div>
-
-        <p className="text-gray-400 text-sm mt-8">
-          Hold phone flat • When Kaaba arrow points straight up → You are facing Mecca
-        </p>
       </div>
+      
+      {/* AR Compass - Renders outside container */}
+      {isArActive && (
+        <ArCompass 
+          sessionValues={sessionValues} 
+          onClose={() => setIsArActive(false)}
+        />  
+      )}
     </div>
   );
 };

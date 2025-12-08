@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "./header";
-import Footer from "./footer";
+import BottomNav from "./bottom-nav";
 import { getLayoutDirection } from "../../utils/language";
 import { initializeTheme } from "../../utils/toggle-theme";
+import Footer from "./footer";
 
-const AppWrapper = ({ children }) => {
+const AppWrapper = ({ children, sessionValues, activeTab, onTabChange }) => {
   useEffect(() => {
     const currentDirection = getLayoutDirection();
     document.documentElement.dir = currentDirection;
@@ -38,11 +39,17 @@ const AppWrapper = ({ children }) => {
   }, []);
 
   return (
-    <>
-      <Header />
-      <main className="container mx-auto">{children}</main>
+    <div 
+      className="min-h-screen pb-20" 
+      style={{ backgroundColor: 'var(--color-background)' }}
+    >
+      <Header sessionValues={sessionValues} />
+      <main className="max-w-7xl mx-auto">
+        {children}
+      </main>
       <Footer />
-    </>
+      <BottomNav activeTab={activeTab} onTabChange={onTabChange} />
+    </div>
   );
 };
 

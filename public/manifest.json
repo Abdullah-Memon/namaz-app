@@ -1,0 +1,88 @@
+{
+  "name": "Namaz - Prayer Times & Qibla Compass",
+  "short_name": "Namaz",
+  "description": "Find prayer times, determine Qibla direction, and track your daily dhikr with an interactive compass",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "categories": ["productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-192x192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icon-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Prayer Times",
+      "short_name": "Prayers",
+      "description": "View prayer times for your location",
+      "url": "/?tab=home",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Find Qibla",
+      "short_name": "Qibla",
+      "description": "Find the direction of Qibla with compass",
+      "url": "/?tab=compass",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Tasbeeh Counter",
+      "short_name": "Tasbeeh",
+      "description": "Track your dhikr with Tasbeeh counter",
+      "url": "/?tab=tasbeeh",
+      "icons": [
+        {
+          "src": "/icon-192x192.png",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

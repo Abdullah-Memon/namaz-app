@@ -1,6 +1,9 @@
 @import "tailwindcss";
 @import "./theme.css";
 
+* {
+  box-sizing: border-box;
+}
 
 body {
   font-family: var(--font-family-regular);
@@ -8,21 +11,46 @@ body {
   color: var(--color-text);
   margin: 0;
   padding: 0;
-  font-size: 1.2rem;
+  font-size: 16px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
-  color: var(--color-primary);
+  color: var(--color-text);
   margin: 0;
   padding: 0;
 }
 
-.module{
-  padding: 2rem;
+.time {
+  direction: ltr !important;
 }
 
-.time{
-  direction: ltr !important;
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-card-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+/* Smooth animations */
+button, a {
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.98);
 }

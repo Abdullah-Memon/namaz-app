@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Dropdown from "../shared/dropdown";
-
+import locationIcon from "../../assets/icons/location.svg";
 import { getLanguages, saveLayoutDirection } from "../../utils/language";
 import {
   getCitysByCountryCode,
@@ -96,26 +96,19 @@ const BasicInfoForm = ({ sessionValues }) => {
   };
 
   return (
-    <div className="module">
-      <div className="max-w-7xl mx-auto">
-        {/* <div className="">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">{getTranslation('basicInfoTitle')}</h1>
-        </div> */}
-
-        <div className="p-8">
-          {/* Updated Grid Layout */}
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-1">
-            {/* City Selection - Badge Style */}
-            <div className="flex flex-col">
-              <label className="block mb-3 text-sm font-medium" style={{ color: 'var(--color-text)' }}>
-                {getTranslation("CityLabel")}
-              </label>
-              <div className="flex flex-wrap gap-3">
-                {/* GPS Badge */}
-                <button
-                  onClick={handleGPSClick}
-                  disabled={isGpsLoading}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border flex items-center gap-2`}
+    <div className="px-6 py-4">
+      <div className="space-y-4">
+        {/* City Selection - Badge Style */}
+        <div className="flex flex-col">
+          <label className="block mb-2 text-xs font-semibold tracking-wider uppercase" style={{ color: 'var(--color-secondary)' }}>
+            {getTranslation("CityLabel")}
+          </label>
+          <div className="flex flex-wrap gap-2">
+            {/* GPS Badge */}
+            <button
+              onClick={handleGPSClick}
+              disabled={isGpsLoading}
+              className={`px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 border flex items-center gap-1.5`}
                   style={{
                     backgroundColor: (gpsState.status === GPS_STATUS.SUCCESS && formData.city === getDetectedCity()) 
                       ? 'var(--color-primary)' 
@@ -142,21 +135,25 @@ const BasicInfoForm = ({ sessionValues }) => {
                     }
                   }}
                 >
-                  <span>
-                    {isGpsLoading 
-                      ? '📍' 
-                      : gpsState.status === GPS_STATUS.SUCCESS 
-                        ? '🎯' 
-                        : gpsState.status === GPS_STATUS.ERROR || gpsState.status === GPS_STATUS.DENIED
-                          ? '❌'
-                          : '📍'
-                    }
-                  </span>
+                  {isGpsLoading ? (
+                    <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <img 
+                      src={locationIcon} 
+                      alt="GPS" 
+                      className="w-4 h-4" 
+                      style={{ 
+                        filter: (gpsState.status === GPS_STATUS.SUCCESS && formData.city === getDetectedCity()) 
+                          ? 'brightness(0) invert(1)' 
+                          : 'var(--icon-filter)'
+                      }} 
+                    />
+                  )}
                   <span>
                     {isGpsLoading 
                       ? 'Detecting...' 
                       : gpsState.status === GPS_STATUS.SUCCESS && getDetectedCity()
-                        ? 'GPS Location'
+                        ? 'GPS'
                         : gpsState.status === GPS_STATUS.DENIED
                           ? 'GPS Denied'
                           : gpsState.status === GPS_STATUS.ERROR
@@ -166,12 +163,12 @@ const BasicInfoForm = ({ sessionValues }) => {
                   </span>
                 </button>
                 
-                {/* Regular City Badges */}
-                {getCitysByCountryCode(formData.country).map((city, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleCityChange(city.value)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border`}
+            {/* Regular City Badges */}
+            {getCitysByCountryCode(formData.country).map((city, index) => (
+              <button
+                key={index}
+                onClick={() => handleCityChange(city.value)}
+                className={`px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200 border`}
                     style={{
                       backgroundColor: formData.city === city.value 
                         ? 'var(--color-primary)' 
@@ -196,21 +193,22 @@ const BasicInfoForm = ({ sessionValues }) => {
                   >
                     {city.label}
                   </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Imam Dropdown */}
-            <div className="flex flex-col">
-              <Dropdown
-                label={getTranslation("ImamLabel")}
-                options={getImamList()}
-                preSelectOption={formData.imam}
-                onSelect={handleImamChange}
-              />
-            </div>
+            ))}
           </div>
         </div>
+
+        {/* Imam Dropdown - Compact */}
+        {/* <div className="flex flex-col">
+          <label className="block mb-2 text-xs font-semibold tracking-wider uppercase" style={{ color: 'var(--color-secondary)' }}>
+            {getTranslation("ImamLabel")}
+          </label>
+          <Dropdown
+            options={getImamList()}
+            preSelectOption={formData.imam}
+            onSelect={handleImamChange}
+            searchable={false}
+          />
+        </div> */}
       </div>
     </div>
   );
