@@ -40,7 +40,7 @@ const AppWrapper = ({ children, sessionValues, activeTab, onTabChange }) => {
 
   return (
     <div 
-      className="min-h-screen pb-20" 
+      className="min-h-screen pb-20 over-flow-x-hidden" 
       style={{ backgroundColor: 'var(--color-background)' }}
     >
       <Header sessionValues={sessionValues} />

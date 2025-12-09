@@ -167,40 +167,124 @@ const dictionary = {
   },
 
   NavigationLabels: {
-    en:{
-      home: "Home",
+    en: {
+      home: "Prayer",
       qibla: "Qibla",
       tasbeeh: "Tasbeeh",
     },
-    sd:{
-      home: "گهر",
+    sd: {
+      home: "نماز",
       qibla: "قبلي",
       tasbeeh: "تسبیح",
     },
-    ur:{
-      home: "گھر",
+    ur: {
+      home: "نماز",
       qibla: "قبلہ",
       tasbeeh: "تسبیح",
-    }
+    },
   },
 
-  TasbeehQuickTargetsTitle:{
+  TasbeehQuickTargetsTitle: {
     en: "Set your Goal",
     sd: "پنھنجو مقصد مقرر ڪريو",
     ur: "اپنا ہدف مقرر کریں",
   },
 
-  NextPrayerLabel:{
+  NextPrayerLabel: {
     en: "Next Prayer",
     sd: "اڳيون نماز",
     ur: "اگلی نماز",
   },
 
-  at:{
+  at: {
     en: "at",
     sd: "۾",
     ur: "پر",
-  }
+  },
+
+  // New structure
+
+  Directions: {
+    en: {
+      left: "Turn Left",
+      right: "Turn Right",
+      extactDirection: "Exact Direction",
+      yourDirection: "Your Direction",
+      facingDirection: "You are facing qibla!",
+      almostThere: "Almost There!",
+    },
+    sd: {
+      left: "کاٻي طرف موڙيو",
+      right: "ساڄي طرف موڙيو",
+      exactDirection: "بلڪل صحيح رخ",
+      yourDirection: "توهان جو رخ",
+      facingDirection: "توهان قبلي ڏانهن منهن ڏئي رهيا آهيو!",
+      almostThere: "تقريبن پهچي ويا آهيو!",
+    },
+    ur: {
+      left: "بائیں مڑیں",
+      right: "دائیں مڑیں",
+      exactDirection: "بالکل صحیح سمت",
+      yourDirection: "آپ کی سمت",
+      facingDirection: "آپ قبلہ کی طرف مڑ رہے ہیں!",
+      almostThere: "تقریباً پہنچ گئے ہیں!",
+    },
+  },
+
+  ButtonTexts: {
+    en: {
+      reset: "Reset",
+      set: "Set",
+      exit: "Exit",
+      refresh: "Refresh",
+    },
+    sd: {
+      reset: "ري سيٽ ڪريو",
+      set: "سيٽ ڪريو",
+      exit: "بند ڪريو",
+      refresh: "ري فريش ڪريو",
+    },
+    ur: {
+      reset: "ری سیٹ کریں",
+      set: "سیٹ کریں", 
+      exit: "بند کریں",
+      refresh: "ری فریش کریں",
+    },
+  },
+
+  LabelTexts: {
+    en: {
+      currentTime: "Current Time",
+  },
+    sd: {
+      currentTime: "موجوده وقت",
+    },
+    ur: {
+      currentTime: "موجودہ وقت",
+    },
+  },
+
+
+  Errors: {
+    en:{
+      camera: {
+        accessDenied: "Camera access denied. Please allow camera permissions and try again.",
+        generalError: "Unable to access camera. Please check permissions and try again." 
+      }
+    },
+    sd:{
+      camera: {
+        accessDenied: "اي آر ڪمپاس لاءِ ڪئميرا تائين رسائي ضروري آهي. مهرباني ڪري ڪئميرا جي اجازت ڏيو ۽ ٻيهر ڪوشش ڪريو.",
+        generalError: "ڪئميرا تائين رسائي ممڪن ناهي. مهرباني ڪري اجازت چيڪ ڪريو ۽ ٻيهر ڪوشش ڪريو."
+      }
+    },
+    ur:{
+      camera: {
+        accessDenied: "اے آر کمپاس کے لیے کیمرہ تک رسائی ضروری ہے۔ براہ کرم کیمرہ کی اجازت دیں اور دوبارہ کوشش کریں۔",
+        generalError: "کیمرہ تک رسائی ممکن نہیں ہے۔ براہ کرم اجازت چیک کریں اور دوبارہ کوشش کریں."
+      }
+    },
+  },
 };
 const getTranslation = (key) => {
   const lang = getCurrentLanguage();

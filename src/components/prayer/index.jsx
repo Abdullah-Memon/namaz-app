@@ -256,7 +256,7 @@ const Prayer = ({ sessionValues }) => {
           }}
         >
           <div className="flex items-center justify-between mb-4">
-            <span className="text-white/80 text-sm font-medium tracking-wider">CURRENT PRAYER</span>
+            <span className="text-white/80 text-sm font-medium tracking-wider">{getTranslation("LabelTexts").currentTime}</span>
             <img 
               src={bellIcon} 
               alt="Bell" 
@@ -265,13 +265,13 @@ const Prayer = ({ sessionValues }) => {
             />
           </div>
           <h2 
-            className="text-white text-4xl font-bold mb-2"
-            style={{ fontFamily: 'var(--font-family-heading)' }}
+            className="text-4xl font-bold mb-2"
+            style={{ color: '#ffffff' }}
           >
             {getPrayerName(currentPrayer.name)}
           </h2>
-          <div className="flex items-center gap-2 mb-6">
-            <span className="text-xl">⏰</span>
+          <div className="flex items-center gap-2 mb-6 mt-2">
+            {/* <span className="text-xl">⏰</span> */}
             <span className="text-white text-2xl font-semibold time">
               {formatTime(currentPrayer.time)}
             </span>
@@ -305,7 +305,8 @@ const Prayer = ({ sessionValues }) => {
                 className="flex items-center justify-between p-4 rounded-2xl transition-all duration-200"
                 style={{
                   backgroundColor: isUpcoming ? 'var(--color-next-bg)' : 'var(--color-card-secondary)',
-                  border: isUpcoming ? '2px solid var(--color-primary)' : '1px solid var(--color-border)'
+                  // border: isUpcoming ? '2px solid var(--color-primary)' : '1px solid var(--color-border)'
+                  border: '1px solid var(--color-border)'
                 }}
               >
                 <div className="flex items-center gap-4">
@@ -322,7 +323,8 @@ const Prayer = ({ sessionValues }) => {
                   <span 
                     className="font-medium"
                     style={{
-                      color: isUpcoming ? 'var(--color-primary)' : 'var(--color-text)'
+                      // color: isUpcoming ? 'var(--color-primary)' : 'var(--color-text)'
+                      color: 'var(--color-text)'
                     }}
                   >
                     {getPrayerName(prayer)}
@@ -331,7 +333,8 @@ const Prayer = ({ sessionValues }) => {
                 <span 
                   className="text-lg font-semibold time"
                   style={{
-                    color: isUpcoming ? 'var(--color-primary)' : 'var(--color-secondary)'
+                    // color: isUpcoming ? 'var(--color-primary)' : 'var(--color-secondary)'
+                    color: 'var(--color-text)'
                   }}
                 >
                   {timings[prayer] ? formatTime(timings[prayer]) : "N/A"}

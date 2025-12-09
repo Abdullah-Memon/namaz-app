@@ -90,10 +90,11 @@ const Header = ({ sessionValues }) => {
             {/* Language Dropdown Menu */}
             {showLanguageDropdown && (
               <div
-                className="absolute top-full right-0 mt-2 w-48 rounded-lg shadow-lg z-10"
+                className="absolute top-full -right-8 mt-2 w-48 rounded-lg shadow-lg z-10"
                 style={{
                   backgroundColor: 'var(--color-card)',
-                  border: `1px solid var(--color-border)`
+                  border: `1px solid var(--color-border)`,
+                  // direction: 'var(--direction)'
                 }}
               >
                 {languages.map((lang) => (

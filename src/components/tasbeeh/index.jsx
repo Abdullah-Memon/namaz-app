@@ -169,7 +169,7 @@ const Tasbeeh = () => {
             border: '2px solid var(--color-border)'
           }}
         >
-          🔄 Reset
+          {getTranslation("ButtonTexts").reset}
         </button>
       </div>
 
