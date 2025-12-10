@@ -24,7 +24,7 @@ const prayerNames = {
   Sunset: {
     en: "Sunset",
     ur: "غروب آفتاب",
-    sd: "سج غروب ",
+    sd: "سج لھڻ ",
   },
   Maghrib: {
     en: "Maghrib",

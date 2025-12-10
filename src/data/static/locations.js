@@ -22,7 +22,7 @@ const locations = [
       },
       {
         id: "PK-JCD",
-        city: { en: "Jacobabad", ur: "جیکب آباد", sd: "جاڪب آباد" },
+        city: { en: "Jacobabad", ur: "جیکب آباد", sd: "جيڪب آباد" },
         cityCode: "JCD",
         lat: 28.2811,
         lng: 68.4376,
@@ -36,7 +36,7 @@ const locations = [
         city: {
           en: "Kamber Shahdadkot",
           ur: "قمبر شہدادکوٹ",
-          sd: "قمبر شهدادڪوٽ",
+          sd: "قمبر شھدادڪوٽ",
         },
         cityCode: "KAM",
         lat: 27.587,
@@ -121,7 +121,7 @@ const locations = [
         city: {
           en: "Qambar Shahdadkot",
           ur: "قمبر شہدادکوٹ",
-          sd: "قمبر شهدادڪوٽ",
+          sd: "قمبر شھدادڪوٽ",
         },
         cityCode: "QMB",
         lat: 27.587,
@@ -136,7 +136,7 @@ const locations = [
         city: {
           en: "Shaheed Benazirabad (Nawabshah)",
           ur: "شہید بے نظیر آباد",
-          sd: "شهيد بينظير آباد",
+          sd: "شھيد بينظير آباد",
         },
         cityCode: "SBA",
         lat: 26.2442,
@@ -218,7 +218,7 @@ const locations = [
       },
       {
         id: "PK-SJH",
-        city: { en: "Sanghar", ur: "سانگھڑ", sd: "سانگھڙ" },
+        city: { en: "Sanghar", ur: "سانگھڑ", sd: "سانگهڙ" },
         cityCode: "SJH",
         lat: 26.046,
         lng: 68.948,
@@ -240,7 +240,7 @@ const locations = [
       },
       {
         id: "PK-BDN",
-        city: { en: "Badin", ur: "بدین", sd: "بدن" },
+        city: { en: "Badin", ur: "بدین", sd: "بدين" },
         cityCode: "BDN",
         lat: 24.656,
         lng: 68.838,
@@ -262,7 +262,7 @@ const locations = [
       },
       {
         id: "PK-JAM",
-        city: { en: "Jamshoro", ur: "جامشورو", sd: "جامشورو" },
+        city: { en: "Jamshoro", ur: "جامشورو", sd: "ڄامشورو" },
         cityCode: "JAM",
         lat: 25.43,
         lng: 68.28,
