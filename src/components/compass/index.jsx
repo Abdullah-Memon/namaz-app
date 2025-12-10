@@ -15,10 +15,10 @@ const Compass = ({ sessionValues }) => {
           {/* Title Section */}
           <div className="text-center mb-6">
             <h1 className="text-2xl font-bold mb-2" style={{ color: 'var(--color-text)', fontFamily: 'var(--font-family-heading)' }}>
-              {getTranslation('CompassTitle')}
+              {getTranslation('LabelTexts').compassTitle}
             </h1>
             <p className="text-sm max-w-7xl mx-auto leading-relaxed" style={{ color: 'var(--color-secondary)' }}>
-              {getTranslation('CompassDescription')}
+              {getTranslation('LabelTexts').compassDescription}
             </p>
           </div>
 
@@ -33,7 +33,7 @@ const Compass = ({ sessionValues }) => {
                   color: activeTab === 'traditional' ? 'var(--color-button-text)' : 'var(--color-text)'
                 }}
               >
-                {getTranslation('CompassTraditionalTab')}
+                {getTranslation('LabelTexts').compassTraditionalTab}
               </button>
               
               <button
@@ -44,7 +44,7 @@ const Compass = ({ sessionValues }) => {
                   color: activeTab === 'ar' ? 'var(--color-button-text)' : 'var(--color-text)'
                 }}
               >
-                {getTranslation('CompassARTab')}
+                {getTranslation('LabelTexts').compassARTab}
               </button>
             </div>
           </div>
@@ -97,7 +97,7 @@ const Compass = ({ sessionValues }) => {
                   color: 'var(--color-button-text)'
                 }}
               >
-                🚀 {getTranslation('CompassARTab')}
+                 {getTranslation('LabelTexts').compassARTab}
               </button>
             </div>
           )}

@@ -127,7 +127,7 @@ const Dropdown = ({
               <input
                 ref={searchInputRef}
                 type="text"
-                placeholder={getTranslation('SearchPlaceholder')}
+                placeholder={getTranslation('LabelTexts').searchPlaceholder}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full px-3 py-1 text-md rounded-lg border focus:outline-none transition"

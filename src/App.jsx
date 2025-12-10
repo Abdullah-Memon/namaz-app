@@ -14,6 +14,7 @@ import { defaultImamForCountries } from "./utils/imam";
 import { defaultLanguage } from "./utils/language";
 import { defaultPrayerMethodForCountries } from "./utils/prayer-methods";
 import { initializeGPS, isGPSSupported } from "./utils/gps";
+import { Features } from "./utils/constant";
 
 const App = () => {
   const getInitialSessionValues = () => {
@@ -94,17 +95,17 @@ const App = () => {
         return (
           <>
             <BasicInfoForm sessionValues={sessionValues} />
-            <Prayer sessionValues={sessionValues} />
+            {Features.PrayerTimes && <Prayer sessionValues={sessionValues} />}
           </>
         );
       case 'qibla':
-        return <Compass sessionValues={sessionValues} />;
+        return Features.QiblaDirection ? <Compass sessionValues={sessionValues} /> : null;
       case 'quran':
-        return <Quran />;
+        return Features.QuranVerses ? <Quran /> : null;
       case 'tasbeeh':
-        return <Tasbeeh />;
+        return Features.TasbeehCounter ? <Tasbeeh /> : null;
       default:
-        return <Prayer sessionValues={sessionValues} />;
+        return null;
     }
   };
 

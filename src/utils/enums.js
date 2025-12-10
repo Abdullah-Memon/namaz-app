@@ -1,67 +1,12 @@
-import Compass from "../components/compass";
-import Tasbeeh from "../components/tasbeeh";
 import { getCurrentLanguage } from "./language";
+
 const dictionary = {
   AppName: {
     en: "Namaz",
     sd: "نماز",
     ur: "نماز",
   },
-  basicInfoTitle: {
-    en: "Basic Information",
-    sd: "بنيادي معلومات",
-    ur: "بنیادی معلومات",
-  },
-  CountryLabel: {
-    en: "Country",
-    sd: "ملڪ",
-    ur: "ملک",
-  },
-  CityLabel: {
-    en: "City",
-    sd: "شهر",
-    ur: "شہر",
-  },
-  LanguageLabel: {
-    en: "Language",
-    sd: "ٻولي",
-    ur: "زبان",
-  },
-  ImamLabel: {
-    en: "Imam",
-    sd: "امام",
-    ur: "امام",
-  },
-  SearchPlaceholder: {
-    en: "Search...",
-    sd: "ڳولا...",
-    ur: "تلاش کریں...",
-  },
-  DateLabel: {
-    en: "Date",
-    sd: "تاريخ",
-    ur: "تاریخ",
-  },
-  TimeLabel: {
-    en: "Time",
-    sd: "وقت",
-    ur: "وقت",
-  },
-  NoDataFound: {
-    en: "No data found",
-    sd: "ڪو مواد نه مليو",
-    ur: "کوئی مواد نہیں ملا",
-  },
-  EventLabel: {
-    en: "Occasion of",
-    sd: "موقعو",
-    ur: "موقع",
-  },
-  CelebrateByLabel: {
-    en: "Celebrate by",
-    sd: " ملهائڻ وارا",
-    ur: " منانے والا",
-  },
+
   FooterText: {
     en: {
       line1: "© 2025 Abdul Majid Bhurgri Institute of Language Engineering",
@@ -77,26 +22,7 @@ const dictionary = {
       line2: "ثقافت، سياحت، آثار قديمه ۽ آرڪائيوز ڊپارٽمينٽ، حڪومت سنڌ۔",
     },
   },
-  CompassTitle: {
-    en: "Qibla Direction",
-    sd: "قبلي جو رخ",
-    ur: "قبلہ سمت",
-  },
-  CompassDescription: {
-    en: "Find the accurate direction of Qibla using your device's compass or augmented reality view.",
-    sd: "پنهنجي ڊوائيس جي ڪمپاس يا وڌايل حقيقت واري نظر استعمال ڪندي قبلي جو صحيح رخ ڳوليو.",
-    ur: "اپنے ڈیوائس کے کمپاس یا آگمینٹڈ ریئلٹی ویو کا استعمال کرتے ہوئے قبلہ کی درست سمت تلاش کریں۔",
-  },
-  CompassTraditionalTab: {
-    en: "Traditional Compass",
-    sd: "روايتي ڪمپاس",
-    ur: "روایتی کمپاس",
-  },
-  CompassARTab: {
-    en: "AR Compass",
-    sd: "اي آر ڪمپاس",
-    ur: "اے آر کمپاس",
-  },
+
   CompassExtraText: {
     en: {
       footer1: {
@@ -149,22 +75,6 @@ const dictionary = {
       },
     },
   },
-  QiblaDirectionLabel: {
-    en: "Qibla Direction",
-    sd: "قبلي جو رخ",
-    ur: "قبلہ سمت",
-  },
-
-  TasbeehCounterTitle: {
-    en: "Tasbeeh Counter",
-    sd: "تسبیح ڪائونٽر",
-    ur: "تسبیح کاؤنٹر",
-  },
-  TasbeehCounterDescription: {
-    en: "A digital counter to help you keep track of your tasbeeh counts.",
-    sd: "هڪ ڊجيٽل ڪائونٽر جيڪو توهان جي تسبیح ڳڻپ کي ٽريڪ ڪرڻ ۾ مدد ڪري ٿو.",
-    ur: "ایک ڈیجیٹل کاؤنٹر جو آپ کی تسبیح گنتی کو ٹریک کرنے میں مدد کرتا ہے۔",
-  },
 
   NavigationLabels: {
     en: {
@@ -183,26 +93,6 @@ const dictionary = {
       tasbeeh: "تسبیح",
     },
   },
-
-  TasbeehQuickTargetsTitle: {
-    en: "Set your Goal",
-    sd: "پنھنجو مقصد مقرر ڪريو",
-    ur: "اپنا ہدف مقرر کریں",
-  },
-
-  NextPrayerLabel: {
-    en: "Next Prayer",
-    sd: "اڳيون نماز",
-    ur: "اگلی نماز",
-  },
-
-  at: {
-    en: "at",
-    sd: "۾",
-    ur: "پر",
-  },
-
-  // New structure
 
   Directions: {
     en: {
@@ -246,7 +136,7 @@ const dictionary = {
     },
     ur: {
       reset: "ری سیٹ کریں",
-      set: "سیٹ کریں", 
+      set: "سیٹ کریں",
       exit: "بند کریں",
       refresh: "ری فریش کریں",
     },
@@ -255,34 +145,92 @@ const dictionary = {
   LabelTexts: {
     en: {
       currentTime: "Current Time",
-  },
+      cityLabel: "City",
+      searchPlaceholder: "Search...",
+      dateLabel: "Date",
+      eventLabel: "Occasion of",
+      celebrateByLabel: "Celebrate by",
+      compassTitle: "Qibla Direction",
+      compassDescription:
+        "Find the accurate direction of Qibla using your device's compass or augmented reality view.",
+      compassTraditionalTab: "Traditional Compass",
+      compassARTab: "AR Compass",
+      nextPrayerLabel: "Next Prayer",
+      tasbeehCounterTitle: "Tasbeeh Counter",
+      tasbeehCounterDescription:
+        "A digital counter to help you keep track of your tasbeeh counts.",
+      tasbeehQuickTargetsTitle: "Set your Goal",
+      qiblaDirectionLabel: "Qibla Direction",
+    },
+
     sd: {
       currentTime: "موجوده وقت",
+      cityLabel: "شهر",
+      searchPlaceholder: "ڳولا...",
+      dateLabel: "تاريخ",
+      eventLabel: "موقعو",
+      celebrateByLabel: " ملهائڻ وارا",
+      compassTitle: "قبلي جو رخ",
+      compassDescription:
+        "پنهنجي ڊوائيس جي ڪمپاس يا وڌايل حقيقت واري نظر استعمال ڪندي قبلي جي صحيح رخ ڳوليو.",
+      compassTraditionalTab: "روايتي ڪمپاس",
+      compassARTab: "اي آر ڪمپاس",
+      nextPrayerLabel: "اڳيون نماز",
+      tasbeehCounterTitle: "تسبیح کاؤنٹر",
+      tasbeehCounterDescription:
+        "ایک ڈیجیٹل کاؤنٹر جو آپ کی تسبیح گنتی کو ٹریک کرنے میں مدد کرتا ہے۔",
+      tasbeehQuickTargetsTitle: "اپنا ہدف مقرر کریں",
+      qiblaDirectionLabel: "قبلہ سمت",
     },
+
     ur: {
       currentTime: "موجودہ وقت",
+      cityLabel: "شہر",
+      searchPlaceholder: "تلاش کریں...",
+      dateLabel: "تاریخ",
+      eventLabel: "موقع",
+      celebrateByLabel: " منانے والا",
+      compassTitle: "قبلہ سمت",
+      compassDescription:
+        "اپنے ڈیوائس کے کمپاس یا آگمینٹڈ ریئلٹی ویو کا استعمال کرتے ہوئے قبلہ کی درست سمت تلاش کریں۔",
+      compassTraditionalTab: "روایتی کمپاس",
+      compassARTab: "اے آر کمپاس",
+      nextPrayerLabel: "اگلی نماز",
+      tasbeehCounterTitle: "تسبیح کاؤنٹر",
+      tasbeehCounterDescription:
+        "ایک ڈیجیٹل کاؤنٹر جو آپ کی تسبیح گنتی کو ٹریک کرنے میں مدد کرتا ہے۔",
+      tasbeehQuickTargetsTitle: "اپنا ہدف مقرر کریں",
+      qiblaDirectionLabel: "قبلہ سمت",
     },
   },
 
-
   Errors: {
-    en:{
+    en: {
       camera: {
-        accessDenied: "Camera access denied. Please allow camera permissions and try again.",
-        generalError: "Unable to access camera. Please check permissions and try again." 
-      }
+        accessDenied:
+          "Camera access denied. Please allow camera permissions and try again.",
+        generalError:
+          "Unable to access camera. Please check permissions and try again.",
+      },
+      noDataFound: "No data found",
     },
-    sd:{
+    sd: {
       camera: {
-        accessDenied: "اي آر ڪمپاس لاءِ ڪئميرا تائين رسائي ضروري آهي. مهرباني ڪري ڪئميرا جي اجازت ڏيو ۽ ٻيهر ڪوشش ڪريو.",
-        generalError: "ڪئميرا تائين رسائي ممڪن ناهي. مهرباني ڪري اجازت چيڪ ڪريو ۽ ٻيهر ڪوشش ڪريو."
-      }
+        accessDenied:
+          "اي آر ڪمپاس لاءِ ڪئميرا تائين رسائي ضروري آهي. مهرباني ڪري ڪئميرا جي اجازت ڏيو ۽ ٻيهر ڪوشش ڪريو.",
+        generalError:
+          "ڪئميرا تائين رسائي ممڪن ناهي. مهرباني ڪري اجازت چيڪ ڪريو ۽ ٻيهر ڪوشش ڪريو.",
+      },
+      noDataFound: "ڪو مواد نه مليو",
     },
-    ur:{
+    ur: {
       camera: {
-        accessDenied: "اے آر کمپاس کے لیے کیمرہ تک رسائی ضروری ہے۔ براہ کرم کیمرہ کی اجازت دیں اور دوبارہ کوشش کریں۔",
-        generalError: "کیمرہ تک رسائی ممکن نہیں ہے۔ براہ کرم اجازت چیک کریں اور دوبارہ کوشش کریں."
-      }
+        accessDenied:
+          "اے آر کمپاس کے لیے کیمرہ تک رسائی ضروری ہے۔ براہ کرم کیمرہ کی اجازت دیں اور دوبارہ کوشش کریں۔",
+        generalError:
+          "کیمرہ تک رسائی ممکن نہیں ہے۔ براہ کرم اجازت چیک کریں اور دوبارہ کوشش کریں.",
+      },
+      noDataFound: "کوئی مواد نہیں ملا",
     },
   },
 };

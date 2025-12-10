@@ -101,7 +101,7 @@ const BasicInfoForm = ({ sessionValues }) => {
         {/* City Selection - Badge Style */}
         <div className="flex flex-col">
           <label className="block mb-2 text-xs font-semibold tracking-wider uppercase" style={{ color: 'var(--color-secondary)' }}>
-            {getTranslation("CityLabel")}
+            {getTranslation("LabelTexts").cityLabel}
           </label>
           <div className="flex flex-wrap gap-2">
             {/* GPS Badge */}
@@ -196,19 +196,6 @@ const BasicInfoForm = ({ sessionValues }) => {
             ))}
           </div>
         </div>
-
-        {/* Imam Dropdown - Compact */}
-        {/* <div className="flex flex-col">
-          <label className="block mb-2 text-xs font-semibold tracking-wider uppercase" style={{ color: 'var(--color-secondary)' }}>
-            {getTranslation("ImamLabel")}
-          </label>
-          <Dropdown
-            options={getImamList()}
-            preSelectOption={formData.imam}
-            onSelect={handleImamChange}
-            searchable={false}
-          />
-        </div> */}
       </div>
     </div>
   );

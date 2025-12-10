@@ -137,7 +137,7 @@ const Events = () => {
                           {event.description}
                         </p>
                         <div>
-                          {getTranslation("CelebrateByLabel")} :
+                          {getTranslation("LabelTexts").celebrateByLabel} :
                           <span className="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
                             {event.observed_by}
                           </span>
@@ -147,13 +147,13 @@ const Events = () => {
                     footer={
                       <div className="grid grid-cols-3 gap-2 flex-wrap">
                         <div>
-                          {getTranslation("DateLabel")} :
+                          {getTranslation("LabelTexts").dateLabel} :
                           <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                             {event.islamic_date.startDate.day}
                           </span>
                         </div>
                         <div className="col-span-2">
-                          {getTranslation("EventLabel")} :
+                          {getTranslation("LabelTexts").eventLabel} :
                           <span className="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-xs font-semibold rounded-full">
                             {event.type}
                           </span>
@@ -169,7 +169,7 @@ const Events = () => {
               <Card
                 body={
                   <div className="text-center text-gray-500 py-4">
-                    {getTranslation("NoDataFound")}
+                    {getTranslation("Errors").noDataFound}
                   </div>
                 }
                 className="bg-white"

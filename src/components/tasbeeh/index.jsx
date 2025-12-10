@@ -89,10 +89,10 @@ const Tasbeeh = () => {
             fontFamily: 'var(--font-family-heading)'
           }}
         >
-          📿 {getTranslation("TasbeehCounterTitle")}
+           {getTranslation("LabelTexts").tasbeehCounterTitle}
         </h1>
         <p className="text-sm" style={{ color: 'var(--color-secondary)' }}>
-          {getTranslation("TasbeehCounterDescription")}
+          {getTranslation("LabelTexts").tasbeehCounterDescription}
         </p>
       </div>
 
@@ -179,7 +179,7 @@ const Tasbeeh = () => {
           className="text-2xl font-bold mb-6 uppercase tracking-wider text-center"
           style={{ color: 'var(--color-secondary)' }}
         >
-          {getTranslation("TasbeehQuickTargetsTitle")}
+          {getTranslation("LabelTexts").tasbeehQuickTargetsTitle}
         </h3>
         <div className="grid grid-cols-2 gap-4 mt-6">
           {[33, 99, 100, 1000].map((targetValue) => (

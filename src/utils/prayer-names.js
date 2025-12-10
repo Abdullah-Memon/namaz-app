@@ -14,12 +14,12 @@ const prayerNames = {
   Dhuhr: {
     en: "Dhuhr",
     ur: "ظہر",
-    sd: "ظهر",
+    sd: "ٻپھري",
   },
   Asr: {
     en: "Asr",
     ur: "عصر",
-    sd: "عصر",
+    sd: "ٽپھري",
   },
   Sunset: {
     en: "Sunset",
@@ -29,12 +29,12 @@ const prayerNames = {
   Maghrib: {
     en: "Maghrib",
     ur: "مغرب",
-    sd: "مغرب",
+    sd: "سچ لٿي",
   },
   Isha: {
     en: "Isha",
     ur: "عشاء",
-    sd: "عشاء",
+    sd: "سومهڻي",
   },
   Tahajjud: {
     en: "Tahajjud",
